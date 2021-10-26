@@ -158,3 +158,31 @@ export function getLyric(songId){
         }
     })
 }
+
+export function getSongsList(songsListId){
+    return Axios({
+        url:'/playlist/detail',
+        methods:'post',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        params:{
+            id:songsListId
+        }
+    })
+}
+
+
+//通过歌曲id获取歌曲详情
+export function getSongDetail(songId){
+        return Axios({
+            url:'song/detail',
+            methods:'post',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            params:{
+                ids:songId
+            }
+        })
+}

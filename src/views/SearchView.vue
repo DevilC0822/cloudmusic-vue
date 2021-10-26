@@ -1,6 +1,6 @@
 <template>
   <div id="searchview">
-        <backheader :title="this.$route.query.keywords + ' 的搜索结果'" />
+        <backheader :title="getTitle" />
       <!-- <div class="showSongsBox">
           <ul>
               <li>
@@ -51,6 +51,8 @@ import { getSongUrl } from '@/api'
 import { checkMusic } from '@/api'
 import { Dialog } from 'vant';
 import SongCard from '../components/songCard.vue';
+import { getSongsList } from '@/api'
+import { getSongDetail } from '@/api'
 
 export default {
 
@@ -63,9 +65,20 @@ export default {
             songId:null,
             songDownloadUrl:'',
             isShowDownloadDialog:false,
+            showPlayListName:''
+            
         }
     },
     computed:{
+        getTitle(){
+             if(this.$route.query.keywords){
+                 return this.$route.query.keywords + ' 的搜索结果'
+             }
+             if(this.$route.query.songsListId){
+                 return this.showPlayListName + ' 的搜索结果'
+             }
+
+        }
         
     },
     methods:{
@@ -134,14 +147,51 @@ export default {
         SongCard
     },
     created(){
-        console.log(this.$route.query.keywords)
-        search(this.$route.query.keywords).then(res =>{
+        console.log(this.$route.query)
+        if(this.$route.query.keywords){
+            search(this.$route.query.keywords).then(res =>{
                 console.log('search')
                 console.log(res)
                 this.songsInfo = res.data.result.songs
             }).catch(err =>{
                 console.log(err)
             })
+        }
+
+         if(this.$route.query.songsListId){
+          console.log(this.$route.query.songsListId)
+            getSongsList(this.$route.query.songsListId).then(res =>{
+                console.log(res.data.playlist)
+                this.showPlayListName = res.data.playlist.name
+                let songsIdArr = []
+                for (const item of res.data.playlist.trackIds) {
+                    // console.log(item)
+                    // 每次单独通过id请求 歌曲详细信息
+                    //   getSongDetail(item.id).then(res =>{
+                    //     console.log('getSongDetail');
+                    //     console.log(res)
+                     
+                    //     }).catch(err =>{
+                    //     console.log(err)
+                    // })
+                    songsIdArr.push(item.id)
+
+                 }
+                 console.log(songsIdArr.toString());
+                // getSongDetail可以接收多个 id, 用 , 隔开 一次请求多首歌曲详细信息
+                getSongDetail(songsIdArr.toString()).then(res =>{
+                    console.log('getSongDetail');
+                    console.log(res)
+                      this.songsInfo = res.data.songs
+                  }).catch(err =>{
+                    console.log(err)
+                    })
+
+            }).catch(err =>{
+                console.log(err)
+            })
+        }
+      
     }
     
 }

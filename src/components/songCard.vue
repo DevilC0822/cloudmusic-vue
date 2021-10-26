@@ -6,7 +6,7 @@
         <!-- {{item.name}}
           {{item.artists[0].name}} -->
                 <div class="songsIndex">
-                  <p>{{index}}</p>
+                  <p>{{index + 1}}</p>
                 </div>
 
                 <div class="songInfo">

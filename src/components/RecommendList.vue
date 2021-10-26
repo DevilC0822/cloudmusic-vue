@@ -8,7 +8,7 @@
 <van-swipe class="my-swipe" width="30px"  indicator-color="white">
     <van-swipe-item>
         <van-grid :border="false" gutter="10" :column-num="4">
-            <van-grid-item v-for="(item,index) in recommendListOne" :key="index">
+            <van-grid-item v-for="(item,index) in recommendListOne" :key="index" @click="goSongsListView(item)">
                     <img :src="item.picUrl" alt="">   
                     <span>{{item.name}}</span>       
             </van-grid-item>
@@ -17,7 +17,7 @@
     
     <van-swipe-item>
        <van-grid :border="false" gutter="10" :column-num="4">
-            <van-grid-item v-for="(item,index) in recommendListTwo" :key="index">
+            <van-grid-item v-for="(item,index) in recommendListTwo"  :key="index" @click="goSongsListView(item)">
                     <img :src="item.picUrl" alt="">   
                     <span>{{item.name}}</span>       
 
@@ -47,7 +47,7 @@ export default {
             this.recommendListOne.push(res.data.result[0])
             this.recommendListOne.push(res.data.result[1])
             this.recommendListOne.push(res.data.result[2])
-            this.recommendListOne.push(res.data.result[3])
+            this.recommendListOne.push(res.data.result[3]) 
 
             this.recommendListTwo.push(res.data.result[4])
             this.recommendListTwo.push(res.data.result[5])
@@ -58,6 +58,12 @@ export default {
         }).catch(err =>{
             console.log(err)
         })
+    },
+    methods:{
+        goSongsListView(item){
+            console.log(item)
+            this.$router.push({name:'SearchView',query:{songsListId:item.id}})
+        }
     }
 }
 </script>
