@@ -2,7 +2,7 @@
 
 ## Demo Online
 
-<www.devilc.cn:8001>
+(http://www.devilc.cn:8001/)
 
 ## Project setup
 
