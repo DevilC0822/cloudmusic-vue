@@ -10,6 +10,10 @@ const Axios = axios.create({
     responseType:'json',
     withCredentials:true,
     // strictSSL: false
+    methods:'post',
+    headers:{
+        'Content-Type':'application/json'
+    },
 
 })
 

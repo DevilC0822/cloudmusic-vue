@@ -2,7 +2,7 @@
   <div id="recommendlist">
       <div class="header">
         <p>推荐歌单</p>
-        <van-button class="button" size="normal" round type="plain">更多 ></van-button>
+        <van-button class="button" size="normal" round type="plain" @click="more">更多 ></van-button>
       </div>
 
 <van-swipe class="my-swipe" width="30px"  indicator-color="white">
@@ -63,6 +63,9 @@ export default {
         goSongsListView(item){
             console.log(item)
             this.$router.push({name:'SearchView',query:{songsListId:item.id}})
+        },
+        more(){
+            this.$router.push('/songList')
         }
     }
 }

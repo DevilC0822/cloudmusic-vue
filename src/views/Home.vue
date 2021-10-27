@@ -34,6 +34,8 @@ export default {
 </script>
 
 <style scoped>
-
+.home{
+  padding-bottom: 70px;
+}
 
 </style>
