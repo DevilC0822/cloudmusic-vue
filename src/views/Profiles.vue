@@ -1,7 +1,7 @@
 <template>
   <div id="profiles">
-        <div class="loginCard" v-show="!refreshLogin">
-            <p>登录</p>
+        <div class="loginCard" v-if='loginType  == 1' v-show="!refreshLogin">
+            <h3>登录</h3>
 
             <div class="inputBox">
                 <van-cell-group>
@@ -11,10 +11,49 @@
                     <van-field v-model="password" type="password" label="密码" placeholder="请输入密码" />
                 </van-cell-group>
             </div>
-            <van-button class="button" @click="loginBtn" round type="info">登录</van-button>
+
+            <div class="loginBox">
+    <p>换种登陆方式? ><span @click="loginType = 2">使用手机验证码登录</span></p>
+    <button class="button button-glow button-rounded button-raised button-primary"  @click="loginBtn">登录</button>
+
+            <!-- <van-button class="button" @click="loginBtn" round type="info">登录</van-button> -->
+            </div>
+        
      
 
         </div>
+
+       
+         <div class="loginCard" v-else-if='loginType  == 2'  v-show="!refreshLogin">
+            <h3>登录</h3>
+
+            <div class="inputBox">
+                <van-cell-group>
+                    <van-field v-model="phone" label="手机号" placeholder="请输入手机号" />
+                </van-cell-group>
+                 <van-cell-group>
+                    <van-field v-model="password" label="验证码" placeholder="请输入短信验证码" />
+                </van-cell-group>
+            </div>
+
+              <div class="loginBox">
+    <p>换种登陆方式? ><span @click="loginType = 1">使用账号登录</span></p>
+    <button class="button button-glow button-rounded button-raised button-primary"  >登录(未做)</button>
+
+            <!-- <van-button class="button" @click="loginBtn" round type="info">登录</van-button> -->
+            </div>
+
+     
+
+        </div>
+
+        <div v-else>
+            登录类型错误,请检查loginType
+        </div>
+
+
+
+
         <div class="profileCard" v-show="refreshLogin">
             <div class="showInfoBox">
                 <p>
@@ -83,6 +122,8 @@ export default {
             '0%': '#3fecff',
             '100%': '#6149f6',
           },
+          //登陆方式 默认为1账号密码登录  2为验证码登录
+          loginType:1
         }
     },
     computed:{
@@ -134,7 +175,7 @@ export default {
                             // 登陆成功后 将更变登录状态
                             this.$store.commit('setIsLogin',true)
                             console.log(this.$store)
-                            Notify({type: 'success',messa:'登录成功'});
+                        Notify({ type: 'success', message: '登录成功' });
                             
                     }
                 }).catch(err =>{
@@ -163,6 +204,7 @@ export default {
 #profiles{
     padding-top: 100px;
 }
+
 .loginCard{
     width: 60%;
     height: 300px;
@@ -171,17 +213,25 @@ export default {
     border-radius: 16px;
     box-shadow: 0px 0px 2px 1px whitesmoke;
 }
-.loginCard p{
+.loginBox{
+    display:flex;
+    justify-content: space-around;
+    margin-top: 12px;
+}
+.loginCard h3{
     padding-top: 50px;
     font-weight: bold;
     font-size: 24px;
     margin: 0;
 }
-.loginCard .button{
+.loginCard p{
+    font-size: 12px;
+}
+/* .loginCard .button{
     left: 100px;
     top: 25px;
     width: 80px;
-}
+} */
 
 .inputBox{
     width: 80%;
@@ -243,4 +293,10 @@ export default {
 }
 }
 
+</style>
+
+<style>
+.van-notify--success{
+    border-radius: 0 0 16px 16px !important;
+}
 </style>

@@ -34,6 +34,7 @@ export default ({
 
 
 <style>
+@import url('./assets/css/button.css');
 html{
   background:#fff;
 

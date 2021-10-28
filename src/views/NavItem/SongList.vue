@@ -72,7 +72,6 @@ export default {
 
     .showPlayList{
       width: 200px;
-      height: 200px;
 
       
 

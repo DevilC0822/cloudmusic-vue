@@ -135,3 +135,10 @@ export function getHostPlayList(){
             }
         })
 }
+
+// toplist
+export function getTopList(){
+        return Axios({
+            url:'/toplist',
+        })
+}

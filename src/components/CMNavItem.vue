@@ -1,6 +1,6 @@
 <template>
   <div id="cmnavitem">
-        <van-grid gutter="10" border='falase' >
+        <van-grid gutter="10" >
             <van-grid-item icon="good-job-o" @click="todayRecommend" text="每日推荐" />
             <van-grid-item icon="service-o" @click="privateFM" text="私人FM" />
             <van-grid-item icon="music-o" @click="songList" text="歌单" />
