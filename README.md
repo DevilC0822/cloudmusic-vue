@@ -18,7 +18,6 @@ yarn serve
 or  
 npm run serve  
 
-t
 
 ### Compiles and minifies for production
 

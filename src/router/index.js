@@ -12,7 +12,11 @@ const routes = [
     component: Home,
     children:[
 
-    ]
+    ],
+  },
+  {
+    path:'/home',
+    redirect:'/'
   },
   {
     path: '/todayRecommend',

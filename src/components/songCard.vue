@@ -1,10 +1,9 @@
 <template>
   
   <div>
-      <!--  v-for="(item,index) in songsInfo" :key="index" -->
+     
         <div class="songCard" v-for="(item,index) in songsInfo" :key="index">
-        <!-- {{item.name}}
-          {{item.artists[0].name}} -->
+     
                 <div class="songsIndex">
                   <p>{{index + 1}}</p>
                 </div>
@@ -22,6 +21,8 @@
                 </div>
         
         </div>
+
+
   </div>
 
 </template>
@@ -55,7 +56,9 @@ export default {
 <style  scoped>
 .songCard{
     display: flex;
-    
+    margin: 1vw;
+    background: #fff;
+    border-radius: 8px;
 }
 .songsIndex{
     width: 20%;

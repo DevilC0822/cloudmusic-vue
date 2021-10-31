@@ -1,32 +1,49 @@
 <template>
   <div id="cmswiper">
-      <van-swipe class="my-swipe" :duration="1000" :autoplay="5000" indicator-color="white">
+
+<van-swipe ref="swipe" class="my-swipe"  :duration="1000" :autoplay="0" indicator-color="white">
+
   <van-swipe-item v-for="item in banners" :key="item.index">
      <!-- <a :href="item.url"></a> -->
       <img :src="item.pic" alt="">
+      <button @click="prev" class="prev">prev</button>
+<button @click="next" class="next">next</button>
   </van-swipe-item>
 <!-- <template #indicator>
     <div class="custom-indicator">{{ current + 1 }}/{{banners.length}}</div>
   </template> -->
+
 </van-swipe>
+
 
   </div>
 </template>
 
 <script>
 import { getSwiperImg } from '../api/index.js'
+import '@vant/touch-emulator';
+
 export default {
 
     data(){
         return {
             banners:[],
-            current:'0'
+            current:'0',
+            autoplay:0
         }
     },
     methods:{
     //     onChange(index) {
     //   this.current = index;
     //  },
+    prev(){
+        this.$refs.swipe.prev()
+
+    },
+    next(){
+        console.log(this.$refs.swipe)
+        this.$refs.swipe.next()
+    }
     },
 
     created(){
@@ -34,6 +51,7 @@ export default {
             console.log(res)
             this.banners = res.data.banners
         }).catch(err =>{
+            
             console.log(err)
         })
     }
@@ -59,7 +77,24 @@ export default {
 .van-swipe img{
     width: 100%;
     border-radius: 16px;
+    position: relative;
+}
+.prev,.next{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    /* background-color: transparent; */
+    background-color: pink;
+    
+    position: absolute;
+    top: 40%;
+}
+.prev{
 
+    left: 2%;
+}
+.next{
+    right: 2%;
 }
 .van-swipe__indicator{
     width: 20px !important;
@@ -80,6 +115,9 @@ export default {
     width: 3vw !important;
     height: 0.8vw !important;
 
+  }
+  .prev,.next{
+      display: none;
   }
 }
 </style>
