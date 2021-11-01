@@ -20,7 +20,8 @@
 <div class="audio-wrapper">
     <div class="songInfoShow">
         <h6>{{this.$store.state.playingSong.name}}</h6>
-        <p>{{this.$store.state.playingSong.songer}}</p>
+        <!-- <p>{{this.$store.state.playingSong.songer[0].name}}</p> -->
+       <p v-for="item in this.$store.state.playingSong.songer" :key="item.index" style="margin-left:'10px'">{{item.name}}</p>
     </div>
     <audio controls  :src="playingUrl">
     <p>Your browser does not support the <code>audio</code> element.</p>

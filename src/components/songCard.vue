@@ -10,7 +10,7 @@
 
                 <div class="songInfo">
                     <h3>{{item.name}}</h3>
-                    <p v-if="item.alias"> {{item.artists[0].name}}</p>
+                    <p v-if="item.alias"> {{item.artists[0].name}}<span v-if="item.artists[1]">{{'/' + item.artists[1].name}}</span></p>
                     <p v-else> {{item.ar[0].name}}</p>
                 </div>
 
@@ -42,9 +42,9 @@ export default {
                 let playingSong = {}
                 playingSong.name = item.name
                 if(item.artists){
-                 playingSong.songer = item.artists[0].name
+                 playingSong.songer = item.artists
                 }else{
-                    playingSong.songer = item.ar[0].name
+                    playingSong.songer = item.ar
                 }
                 playingSong.id = item.id
                 this.$store.commit('setPlayingSong',playingSong)
