@@ -27,7 +27,7 @@
       </div> -->
 
 
-<div >
+<div class="songs-container">
     <song-card :songsInfo='songsInfo'/>
 </div>
 
@@ -198,8 +198,10 @@ export default {
 </script>
 
 <style scoped>
-.showSongsBox{
-
+.songs-container{
+    padding: 20px 0;
+    width: 80%;
+    margin: auto;
 }
 .showSongsBox ul li{
     display: flex;

@@ -1,5 +1,7 @@
 <template>
   <div id="profiles">
+
+      <cmheader/>
         <div class="loginCard" v-if='loginType  == 1' v-show="!refreshLogin">
             <h3>登录</h3>
 
@@ -101,6 +103,7 @@
 </template>
 
 <script>
+import cmheader from '../components/CMHeader.vue'
 import cmbottom from '../components/CMBottom.vue'
 import { login } from '@/api'
 import { loginStatus } from '@/api'
@@ -141,6 +144,7 @@ export default {
         },
     },
     components:{
+        cmheader,
         cmbottom
     },
     methods:{
@@ -203,9 +207,7 @@ export default {
 </script>
 
 <style scoped>
-#profiles{
-    padding-top: 100px;
-}
+
 
 .loginCard{
     width: 60%;

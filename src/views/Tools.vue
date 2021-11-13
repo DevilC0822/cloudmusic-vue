@@ -1,6 +1,6 @@
 <template>
   <div id="tools">
-
+<cmheader/>
       tools
         <cmbottom/>
 
@@ -9,10 +9,12 @@
 </template>
 
 <script>
+import cmheader from '../components/CMHeader.vue'
 import cmbottom from '../components/CMBottom.vue'
 
 export default {
  components:{
+    cmheader,
     cmbottom
   }
 }

@@ -1,17 +1,21 @@
 <template>
   <div class="about">
+        <cmheader/>
+
     <h1>This is an about page</h1>
         <cmbottom/>
   </div>
 </template>
 
 <script>
+import cmheader from '../components/CMHeader.vue'
 import cmbottom from '../components/CMBottom.vue'
 
 
 export default ({
   components:{
-    cmbottom
+    cmheader,
+    cmbottom,
   }
 })
 </script>

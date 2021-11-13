@@ -50,7 +50,7 @@ a{
 }
 @media screen and (max-width:750px){
  .pc-show{
-  display: none;
+  display: none !important;
 }
 .mob-show{
   display:block;

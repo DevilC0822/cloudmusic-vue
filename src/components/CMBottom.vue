@@ -1,5 +1,5 @@
 <template>
-  <div id="cmbottom">
+  <div id="cmbottom" class="mob-show">
 
 
 <van-tabbar v-model="active" active-color="#ee0a24" inactive-color="#000" @change="onChange(active)">
@@ -74,23 +74,14 @@ export default {
 </script>
 
 
-<style scoped>
+<style scoped lang='less'>
+
+
 .van-tabbar{
     max-width: 750px;
     left: 0;
     right: 0;
     margin: auto;
 }
-/* #nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-} */
 </style>
