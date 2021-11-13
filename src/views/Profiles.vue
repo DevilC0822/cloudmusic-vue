@@ -14,7 +14,8 @@
 
             <div class="loginBox">
     <p>换种登陆方式? ><span @click="loginType = 2">使用手机验证码登录</span></p>
-    <button class="button button-glow button-rounded button-raised button-primary"  @click="loginBtn">登录</button>
+    <el-button type="primary" @click="loginBtn">登录</el-button>
+    <!-- <button class="button button-glow button-rounded button-raised button-primary"  @click="loginBtn">登录</button> -->
 
             <!-- <van-button class="button" @click="loginBtn" round type="info">登录</van-button> -->
             </div>
@@ -38,7 +39,8 @@
 
               <div class="loginBox">
     <p>换种登陆方式? ><span @click="loginType = 1">使用账号登录</span></p>
-    <button class="button button-glow button-rounded button-raised button-primary"  >登录(未做)</button>
+    <el-button type="primary">登录(未做)</el-button>
+ 
 
             <!-- <van-button class="button" @click="loginBtn" round type="info">登录</van-button> -->
             </div>

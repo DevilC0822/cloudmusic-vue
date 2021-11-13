@@ -33,15 +33,27 @@ export default ({
 </script>
 
 
-<style>
-@import url('./assets/css/button.css');
+<style lang="less">
+/* @import url('./assets/css/button.css'); */
 html{
   background:#fff;
-
 }
 a{
-text-decoration:none;
-color:#333;
+  text-decoration:none;
+  color:#333;
+}
+.pc-show{
+  display: block;
+}
+.mob-show{
+  display:none;
+}
+@media screen and (max-width:750px){
+ .pc-show{
+  display: none;
+}
+.mob-show{
+  display:block;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -49,17 +61,12 @@ color:#333;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  max-width: 750px;
-  margin: 0 auto;
   background:#f8f8f8;
   min-height: 100vh;
-
-
-}
-@media screen and (max-width:750px){
- 
   
 }
+}
+
 
 
 

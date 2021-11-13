@@ -1,16 +1,30 @@
 <template>
   <div id="cmheader">
-      <van-search class="headerSearch"
-  v-model="searcSongName"
-  shape="round"
-  background="#fff"
-  :placeholder=placeholder
 
-/>
-<!-- <van-button round color="#df2f27" size='normal' type="primary">搜索</van-button> -->
-<van-button round  @keyup.enter.native="searchSong"  @click="searchSong" color="linear-gradient(to right, #ff6034, #ee0a24)">
-  搜索
-</van-button>
+
+      <div class="pc-show">
+          
+
+      </div>
+
+
+
+
+
+      <div class="mob-show">
+            <van-search class="headerSearch "
+            v-model="searcSongName"
+            shape="round"
+            background="#fff"
+            :placeholder=placeholder
+
+            />
+            <!-- <van-button round color="#df2f27" size='normal' type="primary">搜索</van-button> -->
+            <van-button round  @keyup.enter.native="searchSong"  @click="searchSong" color="linear-gradient(to right, #ff6034, #ee0a24)">
+            搜索
+            </van-button>
+      </div>
+
 
 
 
@@ -56,21 +70,32 @@ export default {
 }
 </script>
 
-<style scoped>
-#cmheader{
+<style scoped lang="less">
+
+
+@media screen and (max-width:750px){
+        #cmheader{
     display: flex;
     justify-content: center;
     align-items: center;
     /* padding: 0 10px; */
-}
-
-.headerSearch{
+ 
+    .mob-show{
+        display: flex;
+        width: 100%;
+    }
+    .headerSearch{
     width: 100%;
 }
-.van-button--normal{
+    .van-button--normal{
     padding: 0 25px;
 }
-.van-button__content{
-    width: 10vw;
+    .van-button__content{
+        width: 10vw;
 }
+}
+    }
+
+
+
 </style>

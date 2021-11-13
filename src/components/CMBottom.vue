@@ -1,22 +1,16 @@
 <template>
   <div id="cmbottom">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
-    <!-- <van-tabbar  route v-model="active" active-color="#ee0a24" inactive-color="#000"  :fixed="true" @change="onChange(active)">
-        <van-tabbar-item to="/home" @click="goHome" icon="wap-home">首页</van-tabbar-item>
-        <van-tabbar-item to="/tools" @click="goTools"  icon="gem">工具箱</van-tabbar-item>
-        <van-tabbar-item to="/profiles" @click="goProfiles" icon="manager">我的</van-tabbar-item>
-        <van-tabbar-item to="/about" @click="goAbout" icon="more">关于</van-tabbar-item>
-    </van-tabbar> -->
 
-    <van-tabbar v-model="active" active-color="#ee0a24" inactive-color="#000" @change="onChange(active)">
+
+<van-tabbar v-model="active" active-color="#ee0a24" inactive-color="#000" @change="onChange(active)">
   <van-tabbar-item  @click="goHome" icon="wap-home">首页</van-tabbar-item>
         <van-tabbar-item  @click="goTools"  icon="gem">工具箱</van-tabbar-item>
         <van-tabbar-item  @click="goProfiles" icon="manager">我的</van-tabbar-item>
         <van-tabbar-item @click="goAbout" icon="more">关于</van-tabbar-item>
 </van-tabbar>
+
+
+
 
   </div>
 </template>
