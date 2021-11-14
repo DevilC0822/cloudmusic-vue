@@ -232,4 +232,11 @@ export default {
     padding: 0 30px;
     text-align: left;
 }
+
+@media screen and (max-width:750px) {
+.songs-container{
+    padding: 12px 0;
+    width: 99%;
+}
+}
 </style>

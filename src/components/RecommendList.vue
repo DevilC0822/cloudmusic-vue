@@ -1,9 +1,9 @@
 <template>
   <div id="recommendlist">
-      <div class="header">
+      <!-- <div class="header">
         <p>推荐歌单</p>
         <van-button class="button" size="normal" round type="plain" @click="more">更多 ></van-button>
-      </div>
+</div>
 
 <van-swipe class="my-swipe" width="30px"  indicator-color="white">
     <van-swipe-item>
@@ -25,7 +25,17 @@
         </van-grid>      
     </van-swipe-item>
 
-</van-swipe>
+</van-swipe> -->
+
+
+<h2>推荐歌单</h2>
+<div class='list-container'>
+    <div class='list-item' v-for="(item,index) in recommendList" :key="index" @click="goSongsListView(item)">
+       <img :src="item.picUrl" alt="">   
+        <p>{{item.name}}</p>
+    </div>
+</div>
+
 
   </div>
 </template>
@@ -35,8 +45,7 @@ import { getRecommendList} from '@/api'
 export default {
     data(){
         return{
-            recommendListOne:[],
-            recommendListTwo:[]
+            recommendList:[],
 
         }
     },
@@ -44,15 +53,9 @@ export default {
     created(){
         getRecommendList().then(res =>{
             console.log(res)
-            this.recommendListOne.push(res.data.result[0])
-            this.recommendListOne.push(res.data.result[1])
-            this.recommendListOne.push(res.data.result[2])
-            this.recommendListOne.push(res.data.result[3]) 
+            this.recommendList = res.data.result
 
-            this.recommendListTwo.push(res.data.result[4])
-            this.recommendListTwo.push(res.data.result[5])
-            this.recommendListTwo.push(res.data.result[6])
-            this.recommendListTwo.push(res.data.result[7])
+
 
 
         }).catch(err =>{
@@ -71,53 +74,91 @@ export default {
 }
 </script>
 
-<style scoped>
-.songListItem{
-    width: 50px;
-}
-
-.header{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10px;
-}
-.header p{
-    font-size: 24px;
-}
-.header .button{
-    padding: 0 20px;
-}
-.my-swipe img{
-    width: 75px;
-    height: 75px;
-
-}
-.my-swipe span{
-    font-size: 16px;
-    padding-top: 8px;
-
-}
-.my-swipe .box{
-    display: flex;
-}
-
-@media screen and (max-width:415px) {
-    .my-swipe span{
-        font-size: 12px;
-        padding-top: 5px;
+<style scoped lang='less'>
+#recommendlist{
+    h2{
+        margin: 24px;
+        margin-top: 12px;
+        margin-left: 3%;
     }
-    .my-swipe img{
-        width: 16vw;
-        height: 16vw;
+
+
+    .list-container{
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+
+
+                .list-item{
+           width: 20%;
+           margin: 0 2%;
+           text-align: center;
+           margin-top: 20px;
+           box-sizing: border-box;
+           border: 1px solid #f2f2f2;
+           border-radius: 16px;
+           cursor: pointer;
+
+           img{
+               width: 80%;
+               max-width: 150px;
+               min-width: 75px;
+                padding-top: 24px;
+           }
+           p{
+               margin: 0;
+               padding: 0 20%;
+           }
+    }
+     
+
+   
 }
 }
 
-</style>
+@media screen and(max-width:750px) {
+    #recommendlist{
 
-<style>
-#recommendlist .van-grid-item .van-grid-item__content{
-    justify-content: flex-start !important;
-    border-radius: 16px;
+            h2{
+                margin: 0;
+                margin-top: 12px;
+            }
+
+    
+.list-container{
+
+        .list-item{
+            img{
+
+                padding-top: 12px;
+           }
+           p{
+               font-size: 10px;
+               padding: 0;
+           }
+    }
+}
+
+   
+}
+
+}
+
+@media screen and(max-width:360px) {
+    #recommendlist{
+
+
+    
+.list-container{
+
+        .list-item{
+           p{
+               font-size: 8px;
+           }
+    }
+}
+
+   
+}
 }
 </style>

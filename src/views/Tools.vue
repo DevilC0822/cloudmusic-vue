@@ -1,8 +1,8 @@
 <template>
   <div id="tools">
-<cmheader/>
+<cmheader class="pc-show"></cmheader>
       tools
-        <cmbottom/>
+  <cmbottom/>
 
   </div>
 

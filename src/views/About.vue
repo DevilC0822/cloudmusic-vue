@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-        <cmheader/>
+ <cmheader class="pc-show"></cmheader>
 
     <h1>This is an about page</h1>
         <cmbottom/>

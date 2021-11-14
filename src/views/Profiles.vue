@@ -1,7 +1,7 @@
 <template>
   <div id="profiles">
 
-      <cmheader/>
+     <cmheader class="pc-show"></cmheader>
         <div class="loginCard" v-if='loginType  == 1' v-show="!refreshLogin">
             <h3>登录</h3>
 

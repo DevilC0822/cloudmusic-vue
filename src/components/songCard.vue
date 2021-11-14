@@ -10,8 +10,8 @@
 
                 <div class="songInfo">
                     <h3>{{item.name}}</h3>
-                    <p v-if="item.alias"> {{item.artists[0].name}}<span v-if="item.artists[1]">{{'/' + item.artists[1].name}}</span></p>
-                    <p v-else> {{item.ar[0].name}}</p>
+                    <p v-if="item.alias"> {{item.artists[0].name}}<span v-if="item.artists[1]">{{' / ' + item.artists[1].name}}</span><span v-else></span></p>
+                    <p v-else> {{item.ar[0].name}}<span v-if="item.ar[1]">{{' / ' + item.ar[1].name}}</span><span v-else></span></p>
                 </div>
 
                 <div class="songMenu">
@@ -53,14 +53,14 @@ export default {
 }
 </script>
 
-<style  scoped>
+<style  scoped lang='less'>
 .songCard{
     display: flex;
     margin: 1vw;
     background: #fff;
     border-radius: 8px;
-}
-.songsIndex{
+
+    .songsIndex{
     width: 20%;
 }
 .songInfo{
@@ -73,6 +73,18 @@ export default {
 .songMenu{
     width: 20%;
 }
+}
+
+@media screen and(max-width:750px) {
+    .songCard{
+    display: flex;
+    margin: 1vw;
+    background: #fff;
+    border-radius: 8px;
+
+}
+}
+
 
 
 </style>>

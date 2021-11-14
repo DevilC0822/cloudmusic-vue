@@ -153,6 +153,7 @@ export default {
         .back-btn{
              padding: 8px 16px;
                 box-sizing: border-box;
+                cursor: pointer;
         }
          .back-btn :hover{
                 background: #f5f5f5;
@@ -168,6 +169,7 @@ export default {
                 padding: 5px 10px;
                 box-sizing: border-box;
                 border-radius: 10px;
+                cursor: pointer;
             }
             h2:hover{
                 background: #f5f5f5;
