@@ -61,13 +61,13 @@ export default {
         box-sizing: border-box;
         text-align: center;
         padding: 10px 20px;
-        border: 1px solid #f5f5f5;
+        border: 1px solid #fff;
         border-radius: 16px;
         cursor: pointer;
     }
 
      .cmnav-item:hover{
-        background: #f5f5f5;
+        background: #fff;
 
     }
 }

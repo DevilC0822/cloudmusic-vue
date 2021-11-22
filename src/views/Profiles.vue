@@ -216,6 +216,7 @@ export default {
     margin: 0 auto;
     border-radius: 16px;
     box-shadow: 0px 0px 2px 1px whitesmoke;
+    margin-top:10%;
 }
 .loginBox{
     display:flex;
@@ -250,6 +251,7 @@ export default {
     border-radius: 16px;
     box-shadow: 0px 0px 2px 1px whitesmoke;
     text-align: left;
+    margin-top:10%;
 }
 .profileCard .level{
     text-align: center;

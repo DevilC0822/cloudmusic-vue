@@ -95,7 +95,7 @@ export default {
            text-align: center;
            margin-top: 20px;
            box-sizing: border-box;
-           border: 1px solid #f2f2f2;
+           border: 1px solid #fff;
            border-radius: 16px;
            cursor: pointer;
 
@@ -108,6 +108,10 @@ export default {
            p{
                margin: 0;
                padding: 0 20%;
+           }
+
+           &:hover{
+               background: #fff;
            }
     }
      
