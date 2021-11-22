@@ -27,9 +27,10 @@
     <p>Your browser does not support the <code>audio</code> element.</p>
     </audio>
 
-    <div>
-        歌词<br>
-        {{songLyric}}
+    <div class='lyric'>
+       <h2>歌词</h2>
+        <p v-html='lyric'></p>
+
     </div>
 </div>
 
@@ -51,7 +52,7 @@ export default {
     data(){
         return{
             playingUrl:'',
-            songLyric:''
+            lyric:``
 
         }
     },
@@ -63,7 +64,8 @@ export default {
         //     audio.play()
         // }
     },
-    created(){
+
+    mounted(){
         console.log(this.$store.state)
         getSongPlayUrl(this.$store.state.playingSong.id).then(res =>{
             console.log('getSongPlayUrl')
@@ -74,7 +76,11 @@ export default {
             getLyric(this.$store.state.playingSong.id).then(res =>{
                 console.log('getLyric')
                 console.log(res)
-                this.songLyric = res.data.lrc.lyric
+                let _str = res.data.lrc.lyric
+                _str = _str.replace(/\s\[/g,'<br>[')
+
+
+                this.lyric = _str
 
             }).catch(err =>{
                 console.log(err)
@@ -118,6 +124,13 @@ export default {
     font-size: 14px;
     align-self: end;
     line-height: 1.5;
+}
+.lyric{
+    display: table;
+    margin: auto;
+}
+.lyric h2{
+    text-align: center;
 }
 
 </style>

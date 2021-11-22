@@ -125,13 +125,13 @@ name: 'carrousel',
 #cmswiper{
     // width: 100%;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top: 24px;
 
     .swiper-slide{
         text-align: center;
     }
     .swiper-img{
-        width: 80%;
+        width: 90%;
         margin: auto;
         border-radius: 16px;
     }
@@ -148,6 +148,7 @@ name: 'carrousel',
 }
 @media screen and (max-width:750px) {
     #cmswiper{
+      margin-top: 12px;
         .swiper-img{
         width: 100%;
     }

@@ -135,13 +135,16 @@ export default {
 
 
 #cmheader{
-
-     
+    overflow: hidden;
+     height: 80px;
             .active{
                 color: cornflowerblue;
             }
 
     .pc-show{
+        position: fixed;
+        z-index: 999;
+        background: #fff;
         height: 80px;
         width: 100%;
     

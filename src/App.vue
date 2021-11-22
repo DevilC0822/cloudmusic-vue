@@ -36,7 +36,7 @@ export default ({
 <style lang="less">
 /* @import url('./assets/css/button.css'); */
 html{
-  background:#fff;
+  background:#f5f5f5;
 }
 a{
   text-decoration:none;
