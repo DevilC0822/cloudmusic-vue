@@ -142,3 +142,16 @@ export function getTopList(){
             url:'/toplist',
         })
 }
+
+
+// user/detail
+export function getUserMsg(userId){
+    return Axios({
+        url:'/user/detail',
+        methods:'get',
+        params:{
+            uid:userId
+        }
+
+    })
+}

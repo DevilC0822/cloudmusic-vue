@@ -3,8 +3,13 @@
 
 <template>
   <div id="backheader">
-    <van-nav-bar :title="title" @click-left="backHome" left-text="返回" left-arrow>
-        <!-- <template #right>
+    <van-nav-bar
+      :title="title"
+      @click-left="backHome"
+      left-text="返回"
+      left-arrow
+    >
+      <!-- <template #right>
             <van-icon name="search" size="18" />
         </template> -->
     </van-nav-bar>
@@ -13,15 +18,14 @@
 
 <script>
 export default {
-    props:['title'],
-     methods:{
-      backHome(){
-          this.$router.go(-1)
-      }
-  }
-}
+  props: ["title"],
+  methods: {
+    backHome() {
+      this.$router.go(-1);
+    },
+  },
+};
 </script>
 
 <style>
-    
 </style>

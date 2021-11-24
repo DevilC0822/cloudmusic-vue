@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    <router-view/>
-   
-
+    <router-view />
   </div>
 </template>
 
 <script>
-
-export default ({
-  components: {
-
-  },
+export default {
+  components: {},
   created() {
     //在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem("store")) {
@@ -27,48 +22,41 @@ export default ({
     window.addEventListener("beforeunload", () => {
       sessionStorage.setItem("store", JSON.stringify(this.$store.state));
     });
-},
-})
-
+  },
+};
 </script>
 
 
 <style lang="less">
 /* @import url('./assets/css/button.css'); */
-html{
-  background:#f5f5f5;
+html {
+  background: #f5f5f5;
 }
-a{
-  text-decoration:none;
-  color:#333;
+a {
+  text-decoration: none;
+  color: #333;
 }
-.pc-show{
+.pc-show {
   display: block;
 }
-.mob-show{
-  display:none;
+.mob-show {
+  display: none;
 }
-@media screen and (max-width:750px){
- .pc-show{
-  display: none !important;
+@media screen and (max-width: 750px) {
+  .pc-show {
+    display: none !important;
+  }
+  .mob-show {
+    display: block;
+  }
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    background: #f8f8f8;
+    min-height: 100vh;
+  }
 }
-.mob-show{
-  display:block;
-}
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  background:#f8f8f8;
-  min-height: 100vh;
-  
-}
-}
-
-
-
-
-
 </style>

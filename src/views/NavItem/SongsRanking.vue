@@ -1,75 +1,77 @@
 <template>
   <div id="songsranking">
-        <backheader title="排行榜" />
+    <backheader title="排行榜" />
 
-          <van-grid :gutter="10">
-            <van-grid-item class="showPlayList" v-for="(item,index) in playList" :key="index" @click="goSongsListView(item)">
-                    <img :src="item.coverImgUrl" alt="">   
-                    <span>{{item.name}}</span>       
-            </van-grid-item>
-        </van-grid>
-
-      
+    <van-grid :gutter="10">
+      <van-grid-item
+        class="showPlayList"
+        v-for="(item, index) in playList"
+        :key="index"
+        @click="goSongsListView(item)"
+      >
+        <img :src="item.coverImgUrl" alt="" />
+        <span>{{ item.name }}</span>
+      </van-grid-item>
+    </van-grid>
   </div>
 </template>
 
 <script>
-import backheader from '@/components/BackHeader.vue'
-import { getTopList } from '@/api'
- 
+import backheader from "@/components/BackHeader.vue";
+import { getTopList } from "@/api";
+
 export default {
-  components:{
-    backheader
+  components: {
+    backheader,
   },
-  data(){
+  data() {
     return {
-      playList:[]
-    }
+      playList: [],
+    };
   },
-  created(){
-    getTopList().then(res =>{
-      console.log(res)
-      for (const playListId of res.data.list) {
-          this.playList.push(playListId)
-      }
-    }).catch(err =>{
-      console.log(err)
-    })
-  },
-    methods:{
-     goSongsListView(item){
-            console.log(item)
-            this.$router.push({name:'SearchView',query:{songsListId:item.id}})
+  created() {
+    getTopList()
+      .then((res) => {
+        console.log(res);
+        for (const playListId of res.data.list) {
+          this.playList.push(playListId);
         }
-  }
-}
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  methods: {
+    goSongsListView(item) {
+      console.log(item);
+      this.$router.push({
+        name: "SearchView",
+        query: { songsListId: item.id },
+      });
+    },
+  },
+};
 </script>
 
 
 <style lang="less" scoped>
+#songsranking {
+  min-height: 100vh;
 
- #songsranking{
-    min-height: 100vh;
+  .showPlayList {
+    width: 200px;
 
-    .showPlayList{
-      width: 200px;
-
-      
-
-      img{
-        width: 100%;
-      }
+    img {
+      width: 100%;
     }
   }
+}
 </style>
 
 <style lang="less">
- #songsranking{
-
-  .van-grid-item__content{
-          justify-content: flex-start !important;
-      }
-
- }
-
+#songsranking {
+  .van-grid-item__content {
+    justify-content: flex-start !important;
+  }
+}
 </style>
