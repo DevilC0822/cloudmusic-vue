@@ -679,7 +679,6 @@ a, a:hover {
       display: inline-flex;
       font-size: 27px;
       margin-right: 10px;
-      //color: #6944ff;
     }
 
   }
