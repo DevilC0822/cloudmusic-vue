@@ -81,7 +81,7 @@
               />
             </svg>
             <div class="form">
-              <label for="email">Email</label>
+              <label for="email">phone</label>
               <input
                 type="phone"
                 v-model="phone"
