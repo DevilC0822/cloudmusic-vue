@@ -1,12 +1,49 @@
 <template>
   <div id="app">
-    <router-view />
+   
+    <router-view/>
+
+    <audio
+
+      controls
+      autoplay
+      :src="playingUrl"
+      style="visibility: hidden;"
+    >
+    </audio>
   </div>
 </template>
 
 <script>
+import { getSongPlayUrl } from "@/api";
+
 export default {
   components: {},
+  data(){
+    return {
+    playingUrl:''
+    }
+  },
+  //  computed: {
+  //   // 计算属性的 getter
+  //   playingUrl: function () {
+  //     // `this` 指向 vm 实例
+  //          console.log(this.$store.state);
+  //   getSongPlayUrl(this.$store.state.playingSong.id)
+  //     .then((res) => {
+  //       console.log("getSongPlayUrl1");
+  //       console.log(res);
+        
+  //        res.data.data[0].url;
+  //        return 'res url'
+  // }).catch((err) => {
+  //       console.log(err);
+  //       return 'err url'
+  //     })
+
+
+  //   }
+  // },
   created() {
     //在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem("store")) {
@@ -23,7 +60,33 @@ export default {
       sessionStorage.setItem("store", JSON.stringify(this.$store.state));
     });
   },
-};
+  mounted(){
+  //    console.log(this.$store.state);
+  //   getSongPlayUrl(this.$store.state.playingSong.id)
+  //     .then((res) => {
+  //       console.log("getSongPlayUrl");
+  //       console.log(res);
+  //       this.playingUrl = res.data.data[0].url;
+  // }).catch((err) => {
+  //       console.log(err);
+  //     })
+},
+ watch: {
+    // 如果 `question` 发生改变，这个函数就会运行
+    '$store.state.playingSong.id': function (newVal,oldVal) {
+      console.log('watch')
+      getSongPlayUrl(newVal)
+      .then((res) => {
+        console.log("getSongPlayUrl");
+        // console.log(res);
+        this.playingUrl = res.data.data[0].url;
+  }).catch((err) => {
+        console.log(err);
+      })
+    }
+  },
+
+}
 </script>
 
 

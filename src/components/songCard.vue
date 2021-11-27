@@ -47,6 +47,8 @@ export default {
       }
       playingSong.id = item.id;
       this.$store.commit("setPlayingSong", playingSong);
+      console.log(this.$root)
+
     },
   },
 };

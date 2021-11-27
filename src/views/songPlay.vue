@@ -28,9 +28,9 @@
           {{ item.name }}
         </p>
       </div>
-      <audio controls :src="playingUrl">
+      <!-- <audio controls :src="playingUrl">
         <p>Your browser does not support the <code>audio</code> element.</p>
-      </audio>
+      </audio> -->
 
       <div class="lyric">
         <h2>歌词</h2>
