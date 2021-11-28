@@ -13,10 +13,8 @@
 <script>
 import backheader from "@/components/BackHeader.vue";
 import { search } from "@/api";
-import { Toast } from "vant";
 import { getSongUrl } from "@/api";
 import { checkMusic } from "@/api";
-import { Dialog } from "vant";
 import SongCard from "../components/songCard.vue";
 import { getSongsList } from "@/api";
 import { getSongDetail } from "@/api";
@@ -32,6 +30,7 @@ export default {
       songDownloadUrl: "",
       isShowDownloadDialog: false,
       showPlayListName: "",
+      
     };
   },
   computed: {
@@ -45,17 +44,6 @@ export default {
     },
   },
   methods: {
-    // showDownloadDialog(songId) {
-    //   getSongUrl(songId)
-    //     .then((res) => {
-    //       console.log(res);
-    //       this.songDownloadUrl = res.data.data[0].url;
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    //   this.isShowDownloadDialog = true;
-    // },
     playMusic(songId) {
       console.log(songId);
     },
@@ -68,14 +56,13 @@ export default {
         .catch((err) => {
           console.log(err);
         });
-
-
     },
   },
   components: {
     backheader,
     SongCard,
   },
+
   created() {
     console.log(this.$route.query);
     if (this.$route.query.keywords) {

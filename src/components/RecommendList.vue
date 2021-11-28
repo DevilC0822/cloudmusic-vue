@@ -103,7 +103,8 @@ export default {
         width: 80%;
         max-width: 150px;
         min-width: 75px;
-        padding-top: 24px;
+        margin-top: 24px;
+        border-radius: 8px;
       }
       p {
         margin: 0;
@@ -127,7 +128,9 @@ export default {
     .list-container {
       .list-item {
         img {
-          padding-top: 12px;
+        margin-top: 12px;
+        width: 14.5vw;
+        min-width: 50px;
         }
         p {
           font-size: 10px;

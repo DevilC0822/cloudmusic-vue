@@ -81,6 +81,7 @@ export default {
     width: 85%;
     padding-left: 15px;
     display: flex;
+    align-content: center;
 
     .song-info-img img{
       max-width: 50px;
@@ -115,6 +116,12 @@ export default {
     margin: 1vw;
     background: #fff;
     border-radius: 8px;
+
+    p,h3{
+      font-size: 12px;
+    }
   }
+
+
 }
 </style>>

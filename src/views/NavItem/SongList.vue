@@ -73,20 +73,24 @@ export default {
 #songlist {
   min-height: 100vh;
 
-  .showPlayList {
-    width: 200px;
+    ::v-deep .van-grid-item__content    {
+    justify-content: flex-start;
+        border-radius: 12px;
+    }
+
+
 
     img {
       width: 100%;
-    }
+      border-radius: 8px;
   }
 }
-</style>
 
-<style lang="less">
-#songlist {
-  .van-grid-item__content {
-    justify-content: flex-start !important;
+@media screen and (max-width:750px) {
+  #songlist {
+    span{
+      font-size: 12px;
+    }
   }
 }
 </style>

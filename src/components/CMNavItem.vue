@@ -64,6 +64,10 @@ export default {
     border: 1px solid #fff;
     border-radius: 16px;
     cursor: pointer;
+
+    i{
+      font-size: 24px;
+    }
   }
 
   .cmnav-item:hover {
@@ -76,15 +80,25 @@ export default {
     margin-top: 12px;
 
     .cmnav-item {
-      font-size: 12px;
       padding: 0;
+
+      i{
+        font-size: 16px;
+      }
+
+      h2{
+        font-size: 16px;
+      }
     }
   }
 }
 @media screen and(max-width:360px) {
   #cmnavitem {
     .cmnav-item {
-      font-size: 10px;
+
+       h2{
+        font-size: 12px;
+      }
     }
   }
 }
