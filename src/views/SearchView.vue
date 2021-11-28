@@ -1,47 +1,12 @@
 <template>
   <div id="searchview">
     <backheader :title="getTitle" />
-    <!-- <div class="showSongsBox">
-          <ul>
-              <li>
-                  <h2>歌曲名</h2>
-                  <p>歌手</p>
-                  <div class="menuBox">
 
-                  </div>
-              </li>
-              <li v-for="(item,index) in songsInfo" :key="index">
-                  
-                  <h2>{{item.name}}</h2>
-                  <p>{{item.artists[0].name}}</p>
-                  <div class="menuBox">
-                      <span>
-                          <a href="">播放</a>
-                          </span>
-                      <span @click="showDownloadDialog(item.id)">下载</span>
-                  </div>
-                  </li>
-          </ul>
-          
-
-      </div> -->
 
     <div class="songs-container">
       <song-card :songsInfo="songsInfo" />
     </div>
 
-    <van-popup
-      v-model="isShowDownloadDialog"
-      round
-      overlay-class="downloadDialog"
-    >
-      <div>
-        <h2>下载链接</h2>
-        <p>
-          <a :href="songDownloadUrl">{{ songDownloadUrl }}</a>
-        </p>
-      </div>
-    </van-popup>
   </div>
 </template>
 
@@ -80,27 +45,17 @@ export default {
     },
   },
   methods: {
-    onSelect(action) {
-      // Toast(action.text);
-      // this.isShowDownloadDialog = true;
-      // Dialog.alert({
-      // title: '下载链接',
-      // message: this.songDownloadUrl,
-      // }).then(() => {
-      // // on close
-      // });
-    },
-    showDownloadDialog(songId) {
-      getSongUrl(songId)
-        .then((res) => {
-          console.log(res);
-          this.songDownloadUrl = res.data.data[0].url;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      this.isShowDownloadDialog = true;
-    },
+    // showDownloadDialog(songId) {
+    //   getSongUrl(songId)
+    //     .then((res) => {
+    //       console.log(res);
+    //       this.songDownloadUrl = res.data.data[0].url;
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    //   this.isShowDownloadDialog = true;
+    // },
     playMusic(songId) {
       console.log(songId);
     },
@@ -109,38 +64,12 @@ export default {
         .then((res) => {
           console.log(res);
           this.songDownloadUrl = res.data.data[0].url;
-          // if(res.data.data.length == 1){
-          //     this.actions = [{
-          //         text: res.data.data[0].br
-          //     }]
-          //     this.songDownloadUrl = res.data.data[0].url
-          // }else if(res.data.data.length == 2){
-          //      this.actions = [{
-          //         text: res.data.data[0].br
-          //     },{
-          //          text: res.data.data[1].br
-          //     }
-          //     ]
-          // }else if(res.data.data.length == 3){
-          //      this.actions = [{
-          //         text: res.data.data[0].br
-          //     },{
-          //          text: res.data.data[1].br
-          //     },{
-          //          text: res.data.data[2].br
-          //     }
-          //     ]
-          // }
         })
         .catch((err) => {
           console.log(err);
         });
 
-      // checkMusic(songId).then(res =>{
-      //     console.log(res)
-      // }).catch(err =>{
-      //     console.log(err)
-      // })
+
     },
   },
   components: {
@@ -150,19 +79,39 @@ export default {
   created() {
     console.log(this.$route.query);
     if (this.$route.query.keywords) {
+    console.log('通过关键词搜索进入页面');
       search(this.$route.query.keywords)
         .then((res) => {
           console.log("search");
           console.log(res);
-          this.songsInfo = res.data.result.songs;
+          // this.songsInfo = res.data.result.songs;
+
+          let songsIdArr = [];
+          for (const item of res.data.result.songs) {
+            songsIdArr.push(item.id);
+          }
+          console.log(songsIdArr.toString());
+          // getSongDetail可以接收多个 id, 用 , 隔开 一次请求多首歌曲详细信息
+          getSongDetail(songsIdArr.toString())
+            .then((res) => {
+              console.log("getSongDetail");
+              console.log(res);
+              this.songsInfo = res.data.songs;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+
         })
         .catch((err) => {
           console.log(err);
         });
     }
 
+      
     if (this.$route.query.songsListId) {
       console.log(this.$route.query.songsListId);
+      console.log('通过歌单形式进入页面');
       getSongsList(this.$route.query.songsListId)
         .then((res) => {
           console.log(res.data.playlist);

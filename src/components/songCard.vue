@@ -6,7 +6,12 @@
       </div>
 
       <div class="songInfo">
-        <h3>{{ item.name }}</h3>
+        <div class='song-info-img'>
+          <img :src="item.al.picUrl" alt="">
+        </div>
+
+        <div class='song-info-text'>
+              <h3>{{ item.name }}</h3>
         <p v-if="item.alias">
           {{ item.artists[0].name
           }}<span v-if="item.artists[1]">{{
@@ -19,6 +24,10 @@
           }}<span v-if="item.ar[1]">{{ " / " + item.ar[1].name }}</span
           ><span v-else></span>
         </p>
+          
+        </div>
+
+    
       </div>
 
       <div class="songMenu">
@@ -32,6 +41,7 @@
 export default {
   props: ["songsInfo"],
   created() {},
+
   methods: {
     goPlay(item) {
       console.log("item");
@@ -60,20 +70,42 @@ export default {
   margin: 1vw;
   background: #fff;
   border-radius: 8px;
+  padding: 5px 10px;
+  box-shadow: 1px 1px 1px #000;
 
   .songsIndex {
-    width: 20%;
+    width: 5%;
+    text-align: center;
   }
   .songInfo {
-    width: 60%;
+    width: 85%;
+    padding-left: 15px;
+    display: flex;
+
+    .song-info-img img{
+      max-width: 50px;
+      max-height: 50px;
+      border-radius: 8px;
+    }
+    .song-info-text{
+      padding-left: 15px;
+    }
+
+    h3,p{
+      margin: 0;
+      text-align: left;
+    }
   }
-  .songInfo h3,
-  .songInfo p {
-    margin: 0;
-    text-align: left;
-  }
+
+ 
   .songMenu {
-    width: 20%;
+    width: 10%;
+    display: flex;
+    justify-content: center;
+    p{
+      width: fit-content;
+      cursor: pointer;
+    }
   }
 }
 
