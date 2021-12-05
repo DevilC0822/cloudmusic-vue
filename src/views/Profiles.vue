@@ -291,12 +291,16 @@ export default {
   },
   methods: {
     loginBtn() {
-      login(this.phone, this.password)
+
+      if(this.phone && this.password){
+        login(this.phone, this.password)
         .then((res) => {
           console.log("登陆成功");
           console.log(res);
-
+          if(res.data.cookie){
           this.afterLogin(res.data.cookie)
+
+          }
 
         })
         .catch((err) => {
@@ -304,7 +308,8 @@ export default {
           console.log(err);
           Dialog({ message: "登录失败" });
         });
-    
+      }
+ 
     },
     loginOut() {
       this.$store.commit("setIsLogin", false);
@@ -462,6 +467,7 @@ export default {
     },
 
     afterLogin(cookie){
+      
       //在登录成功后调用这个方法，这个方法中同步一些不同的登录方式返回的不同的登录信息
       this.$store.commit("setIsLogin", true);
       this.$store.commit('setCookie',cookie)
