@@ -2,6 +2,8 @@ import Axios from "./axios";
 import md5 from 'js-md5';
 import store from '@/store/index.js'
 
+let timersTamp = Date.parse(new Date())
+
 
 
 export function getSwiperImg(){
@@ -34,15 +36,24 @@ export function login(phone, psd){
     })
 }
 
-export function loginStatus(){
+
+export async function loginStatus(cookie){
     return Axios({
         url:'/login/status',
+        method:'get',
+        params:{
+            cookie,
+            timerstamp:timersTamp
+        }
     })
 }
 
-export function userLevel(){
+export function userLevel(cookie){
         return Axios({
             url:'/user/level',
+            params:{
+                cookie,
+            }
         })
 }
 
@@ -153,5 +164,42 @@ export function getUserMsg(userId){
             uid:userId
         }
 
+    })
+}
+
+//  login/qr/key
+export async function getQRKey(timersTamp){
+    return await Axios({
+        url:'/login/qr/key',
+        methods:'get',
+        params:{
+            timerstamp:timersTamp
+        }
+    })
+}
+
+//  login/qr/create
+export async function QRCreate(key,isQRimg,timersTamp){
+    return await Axios({
+        url:'/login/qr/create',
+        methods:'get',
+        params:{
+            key,
+            qrimg:isQRimg,
+            timerstamp:timersTamp
+        }
+
+    })
+}
+
+//  login/qr/check
+export async function QRCheck(key,timersTamp){
+    return await Axios({
+        url:'login/qr/check',
+        methods:'get',
+        params:{
+            key,
+            timerstamp:timersTamp
+        }
     })
 }

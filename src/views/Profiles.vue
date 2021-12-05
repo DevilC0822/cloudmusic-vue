@@ -54,12 +54,15 @@
       <div class="page">
         <div class="container">
           <div class="left">
-            <div class="login">Login</div>
+            <div class="login">登录</div>
             <div class="eula">
-              By logging in you agree to the ridiculously long terms that you
-              didn't bother to read
+              输入网易云音乐官方账号密码即可登录
+            </div>
+            <div class='qr-login' @click="qrLogin">
+              扫码登录
             </div>
           </div>
+
           <div class="right">
             <svg viewBox="0 0 320 300">
               <defs>
@@ -81,14 +84,14 @@
               />
             </svg>
             <div class="form">
-              <label for="email">phone</label>
+              <label for="email">手机号</label>
               <input
                 type="phone"
                 v-model="phone"
                 id="email"
                 @focus="emailFous"
               />
-              <label for="password">Password</label>
+              <label for="password">密码</label>
               <input
                 type="password"
                 v-model="password"
@@ -98,7 +101,7 @@
               <input
                 type="submit"
                 id="submit"
-                value="Submit"
+                value="登录"
                 @focus="loginFous"
                 @click="loginBtn"
               />
@@ -215,11 +218,22 @@
 
 </div>
 
+<!-- 二维码弹框 -->
+<el-dialog
+  title="打开手机二维码,扫码登录"
+  :visible.sync="dialogVisible">
+  <div>
+    <img :src="qrImg" alt="">
+  </div>
+
+</el-dialog>
+
 
 
     <cmbottom />
   </div>
 </template>
+
 
 <script>
 import cmheader from "../components/CMHeader.vue";
@@ -229,6 +243,14 @@ import { login } from "@/api";
 import { loginStatus } from "@/api";
 import { userLevel } from "@/api";
 import { getUserMsg } from "@/api";
+import { getQRKey } from "@/api";
+import { QRCreate } from "@/api";
+import { QRCheck } from "@/api";
+
+import axios from 'axios'
+
+
+
 
 import qs from "qs";
 import { Dialog } from "vant";
@@ -245,6 +267,8 @@ export default {
         "0%": "#3fecff",
         "100%": "#6149f6",
       },
+      dialogVisible:false,
+      qrImg:'',
       //登陆方式 默认为1账号密码登录  2为验证码登录
       loginType: 1,
     };
@@ -271,72 +295,204 @@ export default {
         .then((res) => {
           console.log("登陆成功");
           console.log(res);
-          //    let loginRes = res
-          // 将个人信息提交到store中
-          this.$store.commit("setProfileInfo", res.data.profile);
-          //    console.log(res.data.token)
-          this.$store.commit("setToken", JSON.stringify(res.data.token));
-          this.$store.commit("setCookie", res.data.cookie);
-         this.userId = res.data.profile.userId
-          if (res.data.code == 200) {
-            getUserMsg(this.userId).then(res =>{
-              console.log('获取用户详情信息成功')
-              console.log(res)
-            }).catch(err =>{
-              console.log('获取用户详情信息失败')
-              console.log(err)
-            })
 
+          this.afterLogin(res.data.cookie)
 
-            // 获取等级的详情
-            loginStatus()
-              .then((res) => {
-                console.log('获取用户是否登陆成功')
-                console.log(res)
-                if (res.data.data.code == 200) {
-                  userLevel()
-                    .then((res) => {
-                        console.log('获取用户详细等级信息成功')
-                      console.log(res);
-                      // this.userLevelInfo = res.data.data
-                      // 将个人等级信息提交到store中
-                      this.$store.commit("setUserLevelInfo", res.data.data);
-                     
-                    })
-                    .catch((err) => {
-                        console.log('获取用户详细等级信息失败')
-                      console.log(err);
-                    });
-                  // this.profileInfo = loginRes.data.profile
-
-                  // this.isLogin = true
-                  // 登陆成功后 将更变登录状态
-                  this.$store.commit("setIsLogin", true);
-                  console.log(this.$store);
-                  Notify({ type: "success", message: "登录成功" });
-                }
-              })
-              .catch((err) => {
-                console.log('获取用户是否登陆失败')
-                console.log(err);
-              });
-          } else {
-            if (res.data.code == 502) {
-              Dialog({ message: "密码错误" });
-            } else {
-              Dialog({ message: "登录失败" });
-            }
-          }
         })
         .catch((err) => {
           console.log('登陆失败')
           console.log(err);
           Dialog({ message: "登录失败" });
         });
+    
     },
     loginOut() {
       this.$store.commit("setIsLogin", false);
+      this.$store.commit("setCookie", '');
+      this.$store.commit("setToken", '');
+      
     },
+    async qrLogin1(){
+      this.dialogVisible = true
+
+      ////二维码登录第一步
+      let timersTamp = Date.now()
+      let key
+      console.log(timersTamp)
+        getQRKey(timersTamp).then(res => {
+        console.log('qr/key 成功')
+        console.log(res)
+        key = res.data.data.unikey
+
+
+      }).catch(err => {
+        console.log('qr/key 获取失败')
+        console.log(err)
+      })
+
+        //二维码登录第二步
+        QRCreate(key,true,timersTamp).then(res => {
+          console.log('qrCreate 成功')
+          console.log(res)
+          this.qrImg = res.data.data.qrimg
+
+        }).catch(err => {
+          console.log('qrCreate 失败')
+          console.log(err)
+        })
+
+                //二维码登录第三步
+          let timer = setInterval(async () => {
+             QRCheck(key,timersTamp).then(res => {
+            console.log('QRCheck 成功')
+            console.log(res)
+            console.log('当前状态: ' + res.data.message)
+            if(res.data.code == 800){
+              alert('二维码已过期，请重新获取')
+              clearInterval(timer)
+              this.dialogVisible = false
+            }      
+            if(res.data.code == 803){
+              clearInterval(timer)
+              this.dialogVisible = false
+
+          this.$store.commit("setProfileInfo", res.data.profile);
+          //    console.log(res.data.token)
+          this.$store.commit("setToken", JSON.stringify(res.data.token));
+          this.$store.commit("setCookie", res.data.cookie);
+         this.userId = res.data.profile.userId
+
+              loginStatus(this.$store.state.cookie).then(res => {
+                console.log('二维码扫码成功，获取登录状态')
+                console.log(res)
+              })
+            }
+
+          }).catch(err => {
+            console.log('QRCheck 失败')
+            console.log(err)
+          })
+            
+          }, 3000);
+
+
+         
+
+    },
+
+
+    
+    async qrLogin2(){
+      let timer
+      let timestamp = Date.now()
+      const res = await getQRKey(timestamp)
+      const key = res.data.data.unikey
+      const res2 = await QRCreate(key,true,timestamp)
+      this.qrImg = res2.data.data.qrimg
+      this.dialogVisible = true
+
+      timer = setInterval(async () => {
+        const statusRes = await QRCheck(key,timestamp)
+        console.log(statusRes)
+        if (statusRes.code === 800) {
+            alert('二维码已过期,请重新获取')
+            clearInterval(timer)
+            this.dialogVisible = false
+          }
+          if (statusRes.code === 800) {
+            // alert('二维码已过期,请重新获取')
+            // clearInterval(timer)
+            this.dialogVisible = false
+          }
+          if (statusRes.code === 803) {
+            // 这一步会返回cookie
+            clearInterval(timer)
+            alert('授权登录成功')
+            this.dialogVisible = false
+            // await loginStatus()
+          }
+      }, 3000);
+    },
+
+    qrLogin(){
+      let that = this
+       async function checkStatus(key) {
+        const res = await axios({
+          url: `http://devilc.cn:3000/login/qr/check?key=${key}&timerstamp=${Date.now()}`,
+          withCredentials: true, //关键
+        })
+        return res.data
+      }
+
+      async function login() {
+        let timer
+        let timestamp = Date.now()
+        // getLoginStatus()
+        const res = await axios({
+          url: `http://devilc.cn:3000/login/qr/key?timerstamp=${Date.now()}`,
+          withCredentials: true, //关键
+        })
+        const key = res.data.data.unikey
+        const res2 = await axios({
+          url: `http://devilc.cn:3000/login/qr/create?key=${key}&qrimg=true&timerstamp=${Date.now()}`,
+          withCredentials: true, //关键
+        })
+        that.qrImg = res2.data.data.qrimg
+        that.dialogVisible = true
+
+        timer = setInterval(async () => {
+          const statusRes = await checkStatus(key)
+          console.log(statusRes)
+          if (statusRes.code === 800) {
+            alert('二维码已过期,请重新获取')
+            that.dialogVisible = false
+            clearInterval(timer)
+          }
+          if (statusRes.code === 803) {
+            // 这一步会返回cookie
+            clearInterval(timer)
+            that.dialogVisible = false
+            that.afterLogin(statusRes.cookie)
+          
+          }
+        }, 3000)
+      }
+      login()
+
+    },
+
+    afterLogin(cookie){
+      //在登录成功后调用这个方法，这个方法中同步一些不同的登录方式返回的不同的登录信息
+      this.$store.commit("setIsLogin", true);
+      this.$store.commit('setCookie',cookie)
+      //  刷新登录状态
+      loginStatus(cookie).then(res =>{
+              console.log('loginStatus 刷新登录信息')
+              console.log(res)
+              if(res.data.data.profile){
+                this.$store.commit("setIsLogin", true);
+                
+                getUserMsg(res.data.data.profile.userId).then(res =>{
+                console.log('获取用户详情信息成功---')
+                console.log(res)
+                this.$store.commit("setProfileInfo", res.data.profile);
+                console.log(this.$store.state)
+              })
+                userLevel(cookie)
+                    .then((res) => {
+                      console.log('获取用户详细等级信息成功')
+                      console.log(res);
+                      this.$store.commit("setUserLevelInfo", res.data.data)
+                     
+                    })
+
+              }
+            })
+
+
+    },
+    
+        // 控制登录页面下划线动画
     emailFous() {
       var current = null;
       if (current) current.pause();
@@ -355,6 +511,7 @@ export default {
       });
     },
     pswFous() {
+      console.log('111')
       var current = null;
       if (current) current.pause();
       current = anime({
@@ -395,8 +552,22 @@ export default {
 <style scoped lang='less'>
 
 
-//登陆样式
 
+//弹出框样式
+.el-dialog__wrapper ::v-deep .el-dialog{
+  width: 30%;
+  text-align: center;
+}
+::v-deep .el-dialog__headerbtn{
+    display: none;
+ }
+
+@media screen and(max-width:750px){
+  .el-dialog__wrapper ::v-deep .el-dialog{
+  width: 80%;
+}
+}
+//登陆样式
 @import url("https://rsms.me/inter/inter-ui.css");
 ::selection {
   background: #2d2f36;
@@ -422,13 +593,7 @@ body {
   place-content: center;
   width: 100%;
 }
-@media (max-width: 767px) {
-  .page {
-    height: auto;
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-  }
-}
+
 .container {
   display: flex;
   height: 320px;
@@ -438,13 +603,7 @@ body {
 svg {
   left: 0;
 }
-@media (max-width: 767px) {
-  .container {
-    flex-direction: column;
-    height: 630px;
-    width: 320px;
-  }
-}
+
 .left {
   background: white;
   height: calc(100% - 40px);
@@ -452,14 +611,7 @@ svg {
   position: relative;
   width: 50%;
 }
-@media (max-width: 767px) {
-  .left {
-    height: 100%;
-    left: 20px;
-    width: calc(100% - 40px);
-    max-height: 270px;
-  }
-}
+
 .login {
   font-size: 50px;
   font-weight: 900;
@@ -477,14 +629,6 @@ svg {
   color: #f1f1f2;
   position: relative;
   width: 50%;
-}
-@media (max-width: 767px) {
-  .right {
-    flex-shrink: 0;
-    height: 100%;
-    width: 100%;
-    max-height: 350px;
-  }
 }
 svg {
   position: absolute;
@@ -522,9 +666,13 @@ input::-moz-focus-inner {
   border: 0;
 }
 #submit {
-  color: #707075;
-  margin-top: 40px;
+  color: #fff;
+  margin-top: 35px;
   transition: color 300ms;
+  cursor: pointer;
+  padding: 10px;
+  height: initial;
+  border-radius: 80px;
 }
 #submit:focus {
   color: #f2f2f2;
@@ -532,6 +680,49 @@ input::-moz-focus-inner {
 #submit:active {
   color: #d0d0d2;
 }
+.qr-login{
+  margin-left: 40px;
+  cursor: pointer;
+}
+
+@media (max-width: 750px) {
+  .login{
+    margin-top: 40px;
+  }
+
+  .page {
+    height: auto;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+
+.container {
+    flex-direction: column;
+    height: 630px;
+    width: 320px;
+  }
+
+.left {
+    height: 100%;
+    left: 20px;
+    width: calc(100% - 40px);
+    max-height: 270px;
+  }
+.eula{
+  margin: 20px;
+}
+.qr-login{
+  font-size: 16px;
+  margin-left: 0;
+}
+  .right {
+    flex-shrink: 0;
+    height: 100%;
+    width: 100%;
+    max-height: 350px;
+  }
+}
+
 
 
 // 个人信息展示样式
