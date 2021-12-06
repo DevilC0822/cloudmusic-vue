@@ -1,8 +1,6 @@
 import Axios from "./axios";
 import md5 from 'js-md5';
-import store from '@/store/index.js'
 
-let timersTamp = Date.parse(new Date())
 
 
 
@@ -43,10 +41,32 @@ export async function loginStatus(cookie){
         method:'get',
         params:{
             cookie,
-            timerstamp:timersTamp
         }
     })
 }
+
+// logout
+export function logout(cookie){
+    return Axios({
+        url:'/logout',
+        method:'get',
+        params:{
+            cookie,
+        }
+    })
+}
+
+//  login/refresh
+export function loginRefresh(cookie){
+    return Axios({
+        url:'/login/refresh',
+        method:'get',
+        params:{
+            cookie
+        }
+    })
+}
+
 
 export function userLevel(cookie){
         return Axios({

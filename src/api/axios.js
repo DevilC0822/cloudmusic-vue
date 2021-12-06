@@ -9,8 +9,8 @@ const Axios = axios.create({
     timeout:10000,
     responseType:'json',
     withCredentials:true,
-    // strictSSL: false
-    methods:'post',
+    // strictSSL: false,
+    method:'get',
     headers:{
         'Content-Type':'application/json'
     },

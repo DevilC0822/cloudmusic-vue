@@ -230,6 +230,7 @@
 
 
 
+
     <cmbottom />
   </div>
 </template>
@@ -241,6 +242,8 @@ import cmbottom from "../components/CMBottom.vue";
 import anime from "animejs/lib/anime.es.js";
 import { login } from "@/api";
 import { loginStatus } from "@/api";
+import { loginRefresh } from '@/api'
+import { logout } from '@/api'
 import { userLevel } from "@/api";
 import { getUserMsg } from "@/api";
 import { getQRKey } from "@/api";
@@ -306,15 +309,42 @@ export default {
         .catch((err) => {
           console.log('登陆失败')
           console.log(err);
-          Dialog({ message: "登录失败" });
+
+        const h = this.$createElement;
+        this.$notify({
+        title: '登录失败',
+          message: h('i', { style: 'color: teal'}, '登录失败')
+        });
+        });
+      }else{
+
+        const h = this.$createElement;
+        this.$notify({
+          title: '登录失败',
+          message: h('i', { style: 'color: teal'}, '账号或密码为空')
         });
       }
  
     },
     loginOut() {
-      this.$store.commit("setIsLogin", false);
-      this.$store.commit("setCookie", '');
-      this.$store.commit("setToken", '');
+      let cookie = this.$store.state.cookie
+      logout(cookie).then(res => {
+        console.log('loginOut')
+        console.log(res)
+
+        loginRefresh(cookie).then(res => {
+        console.log('loginRefresh')
+        console.log(res)
+        this.$store.commit("setIsLogin", false);
+        this.$store.commit("setCookie", '');
+        this.$store.commit("setToken", '');
+        this.$store.commit("setIsPlay", false);
+        this.$store.commit("setPlayingSong", {});
+
+})
+        
+      })
+      
       
     },
     async qrLogin1(){
