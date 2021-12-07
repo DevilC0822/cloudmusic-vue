@@ -278,7 +278,6 @@ export default {
   },
   computed: {
     refreshLogin() {
-      // this.isLogin = this.$store.state.isLogin
       return this.$store.state.isLogin;
     },
     refreshProfileInfo() {
@@ -335,7 +334,7 @@ export default {
         loginRefresh(cookie).then(res => {
         console.log('loginRefresh')
         console.log(res)
-        this.$store.commit("setIsLogin", false);
+        // this.$store.commit("setIsLogin", false);
         this.$store.commit("setCookie", '');
         this.$store.commit("setToken", '');
         this.$store.commit("setIsPlay", false);
@@ -499,14 +498,14 @@ export default {
     afterLogin(cookie){
       
       //在登录成功后调用这个方法，这个方法中同步一些不同的登录方式返回的不同的登录信息
-      this.$store.commit("setIsLogin", true);
+      // this.$store.commit("setIsLogin", true);
       this.$store.commit('setCookie',cookie)
       //  刷新登录状态
       loginStatus(cookie).then(res =>{
               console.log('loginStatus 刷新登录信息')
               console.log(res)
               if(res.data.data.profile){
-                this.$store.commit("setIsLogin", true);
+                // this.$store.commit("setIsLogin", true);
                 
                 getUserMsg(res.data.data.profile.userId).then(res =>{
                 console.log('获取用户详情信息成功---')

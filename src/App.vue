@@ -72,7 +72,6 @@ export default {
   //     })
 },
  watch: {
-    // 如果 `question` 发生改变，这个函数就会运行
     '$store.state.playingSong.id': function (newVal,oldVal) {
       console.log('watch')
       getSongPlayUrl(newVal)
@@ -83,8 +82,18 @@ export default {
   }).catch((err) => {
         console.log(err);
       })
+    },
+    '$store.state.cookie': function (newVal) {
+      if(newVal){
+        console.log('watch cookie不为空，已登录')
+        this.$store.commit('setIsLogin',true)
+      }else{
+        console.log('watch cookie为空，退出登录')
+        this.$store.commit('setIsLogin',false)
+      }
     }
   },
+  
 
 }
 </script>
