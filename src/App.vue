@@ -3,14 +3,27 @@
    
     <router-view/>
 
-    <audio
 
-      controls
-      autoplay
-      :src="playingUrl"
-      style="visibility: hidden;"
-    >
-    </audio>
+
+    <div :class="{'imitation-audio':true, 'is-bottom':isBottom}"> 
+        <audio :src="playingUrl" ref="mainAudio" style="display:none;"></audio>
+        <div class='song-info'>
+            <p>{{this.$store.state.playingSong.name}}</p>
+            <span>{{this.$store.state.playingSong.songer[0].name}}</span>
+            <span v-if='this.$store.state.playingSong.songer[1]'>{{this.$store.state.playingSong.songer[1].name}}</span>
+        </div>
+
+        <div class='song-control'>
+              <i class="el-icon-back"></i>
+              <i v-if='!this.$store.state.isPlay' class="el-icon-video-play" @click='play'></i>
+              <i v-else class="el-icon-video-pause" @click='play'></i>
+              <i class="el-icon-right"></i>
+        </div>
+
+        <div class='songs-list'>
+              <i class='el-icon-s-unfold'></i>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -21,28 +34,12 @@ export default {
   components: {},
   data(){
     return {
-    playingUrl:''
+    playingUrl:'',
+    isBottom:false
     }
   },
-  //  computed: {
-  //   // 计算属性的 getter
-  //   playingUrl: function () {
-  //     // `this` 指向 vm 实例
-  //          console.log(this.$store.state);
-  //   getSongPlayUrl(this.$store.state.playingSong.id)
-  //     .then((res) => {
-  //       console.log("getSongPlayUrl1");
-  //       console.log(res);
-        
-  //        res.data.data[0].url;
-  //        return 'res url'
-  // }).catch((err) => {
-  //       console.log(err);
-  //       return 'err url'
-  //     })
+  // computed:{
 
-
-  //   }
   // },
   created() {
     //在页面加载时读取sessionStorage里的状态信息
@@ -61,17 +58,36 @@ export default {
     });
   },
   mounted(){
-  //    console.log(this.$store.state);
-  //   getSongPlayUrl(this.$store.state.playingSong.id)
-  //     .then((res) => {
-  //       console.log("getSongPlayUrl");
-  //       console.log(res);
-  //       this.playingUrl = res.data.data[0].url;
-  // }).catch((err) => {
-  //       console.log(err);
-  //     })
+    // 初始化 模拟的audio
+     console.log(this.$store.state);
+    getSongPlayUrl(this.$store.state.playingSong.id)
+      .then((res) => {
+        console.log("getSongPlayUrl");
+        console.log(res);
+        this.playingUrl = res.data.data[0].url;
+  }).catch((err) => {
+        console.log(err);
+      })
+
+
+},
+methods:{
+  play(){
+      let audio = this.$refs.mainAudio
+
+      if(audio.paused){
+        audio.play()
+        this.$store.commit('setIsPlay',true)
+      }else{
+        audio.pause()
+        this.$store.commit('setIsPlay',false)
+
+      }
+  }
+
 },
  watch: {
+   // 监测正在播放歌曲的id 发生改变则根据此id重新请求歌曲url
     '$store.state.playingSong.id': function (newVal,oldVal) {
       console.log('watch')
       getSongPlayUrl(newVal)
@@ -83,6 +99,20 @@ export default {
         console.log(err);
       })
     },
+    '$route':function(newRouter){
+      console.log(newRouter)
+      if(newRouter.name == 'Home' ||  newRouter.name == 'Tools' ||  newRouter.name == 'Profiles' ||  newRouter.name == 'About'){
+                this.isBottom = false
+
+
+      }else{
+        this.isBottom = true
+
+      }
+
+    },
+
+    // 监测cookie 
     '$store.state.cookie': function (newVal) {
       if(newVal){
         console.log('watch cookie不为空，已登录')
@@ -99,8 +129,12 @@ export default {
 </script>
 
 
-<style lang="less">
+<style>
 /* @import url('./assets/css/button.css'); */
+*{
+  margin: 0;
+  padding: 0;
+}
 html {
   background: #f5f5f5;
 }
@@ -129,6 +163,49 @@ a {
     color: #2c3e50;
     background: #f8f8f8;
     min-height: 100vh;
+  }
+}
+</style>
+
+<style scoped lang='less'> 
+.imitation-audio{
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      // padding: 0 5%;
+      position: fixed;
+      bottom: 0;
+      z-index: 999;
+      background: #fff;
+      width: 100%;
+      padding: 10px 0;
+
+      i{
+        font-size: 24px;
+            cursor: pointer;
+
+      }
+
+      .song-info{
+          span{
+            font-size: 12px;
+          }
+      }
+
+      .song-control{
+          i{
+            margin: 0 10px;
+          }
+      }
+
+}
+
+@media screen and (max-width: 750px) {
+  .imitation-audio{
+    bottom: 50px;
+  }
+  .is-bottom{
+    bottom: 0;
   }
 }
 </style>

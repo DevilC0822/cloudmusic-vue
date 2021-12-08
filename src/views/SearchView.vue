@@ -77,7 +77,8 @@ export default {
           for (const item of res.data.result.songs) {
             songsIdArr.push(item.id);
           }
-          console.log(songsIdArr.toString());
+          // console.log(songsIdArr.toString());
+          this.$store.commit('setPlayingList',songsIdArr)
           // getSongDetail可以接收多个 id, 用 , 隔开 一次请求多首歌曲详细信息
           getSongDetail(songsIdArr.toString())
             .then((res) => {
@@ -116,7 +117,9 @@ export default {
             // })
             songsIdArr.push(item.id);
           }
-          console.log(songsIdArr.toString());
+          // console.log(songsIdArr.toString());
+          this.$store.commit('setPlayingList',songsIdArr)
+
           // getSongDetail可以接收多个 id, 用 , 隔开 一次请求多首歌曲详细信息
           getSongDetail(songsIdArr.toString())
             .then((res) => {

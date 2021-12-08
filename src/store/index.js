@@ -11,7 +11,8 @@ export default new Vuex.Store({
     profileInfo:{},
     userLevelInfo:{},
     isPlay:false,
-    playingSong:{}
+    playingSong:{},
+    playingList:[]
   },
   mutations: {
     setToken(state,token){
@@ -37,6 +38,9 @@ export default new Vuex.Store({
     setPlayingSong(state,playingSong){
       state.playingSong = playingSong
     },
+    setPlayingList(state,playingList){
+      state.playingList = playingList
+    },
   },
   getters: {
     getToken(state){
@@ -59,6 +63,9 @@ export default new Vuex.Store({
     },
     getPlayingSong(){
       return state.playingSong
+    },
+    getPlayingList(){
+      return state.playingList
     }
   },
   actions: {
