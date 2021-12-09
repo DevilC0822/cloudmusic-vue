@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="songCard" v-for="(item, index) in songsInfo" :key="index">
+  <div class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
+    <div class="songCard infinite-list-item" v-for="(item, index) in songsInfo" :key="index">
       <div class="songsIndex">
         <p>{{ index + 1 }}</p>
       </div>
@@ -33,7 +33,11 @@
       <div class="songMenu">
         <p @click="goPlay(item)">播放</p>
       </div>
-    </div>
+  </div>
+
+      <!-- <ul class="infinite-list" v-infinite-scroll="load" style="overflow:auto">
+    <li v-for="i in count" :key="i" class="infinite-list-item">{{ i }}</li>
+  </ul> -->
   </div>
 </template>
 
@@ -43,6 +47,9 @@ export default {
   created() {},
 
   methods: {
+    load(){
+        console.log('1111111222')
+    },
     goPlay(item) {
       console.log("item");
       console.log(item);

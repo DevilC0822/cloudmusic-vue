@@ -9,22 +9,30 @@
   </div> -->
   <div id="cmnavitem">
     <div class="cmnav-item" @click="todayRecommend">
-      <i class="el-icon-headset"></i>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-yinlefuhao"></use>
+      </svg>
       <h2>每日推荐</h2>
     </div>
 
     <div class="cmnav-item" @click="privateFM">
-      <i class="el-icon-service"></i>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-a-changpianjiyinle"></use>
+      </svg>
       <h2>私人FM</h2>
     </div>
 
     <div class="cmnav-item" @click="songList">
-      <i class="el-icon-tickets"></i>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-cidai"></use>
+      </svg>
       <h2>歌单</h2>
     </div>
 
     <div class="cmnav-item" @click="songsRanking">
-      <i class="el-icon-s-data"></i>
+      <svg class="icon" aria-hidden="true">
+        <use xlink:href="#icon-yinlefengge"></use>
+      </svg>
       <h2>排行榜</h2>
     </div>
   </div>
@@ -60,13 +68,14 @@ export default {
     width: 20%;
     box-sizing: border-box;
     text-align: center;
-    padding: 10px 20px;
-    border: 1px solid #fff;
+    padding: 10px;
+    border: 1px solid transparent;
     border-radius: 16px;
     cursor: pointer;
 
-    i{
-      font-size: 24px;
+    svg {
+      font-size: 36px;
+      padding: 10px;
     }
   }
 
@@ -82,12 +91,17 @@ export default {
     .cmnav-item {
       padding: 0;
 
-      i{
+      i {
         font-size: 16px;
       }
 
-      h2{
+      h2 {
         font-size: 16px;
+      }
+
+      svg {
+        font-size: 24px;
+        padding: 5px;
       }
     }
   }
@@ -95,8 +109,7 @@ export default {
 @media screen and(max-width:360px) {
   #cmnavitem {
     .cmnav-item {
-
-       h2{
+      h2 {
         font-size: 12px;
       }
     }

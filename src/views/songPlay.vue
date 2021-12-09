@@ -65,13 +65,6 @@ export default {
   },
 
   mounted() {
-    setTimeout(() => {
-      this.$options.parent.$refs.mainAudio.play()
-    this.$store.commit('setIsPlay',true)
-    }, 100);
-    
-
-
     console.log(this.$store.state);
     getSongPlayUrl(this.$store.state.playingSong.id)
       .then((res) => {
@@ -97,12 +90,12 @@ export default {
         console.log(err);
       });
 
-
+    setTimeout(() => {
+      this.$options.parent.$refs.mainAudio.play();
+      this.$store.commit("setIsPlay", true);
+    }, 1000);
   },
 };
-
-      
-
 </script>
 
 <style scoped>

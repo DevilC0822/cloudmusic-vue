@@ -33,4 +33,10 @@ export default {
 .home {
   padding-bottom: 70px;
 }
+
+@media screen and (max-width: 750px) {
+  .home {
+    padding-bottom: 120px;
+  }
+}
 </style>

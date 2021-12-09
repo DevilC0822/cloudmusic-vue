@@ -112,9 +112,12 @@ export function checkMusic(songId){
     })
 }
 
-export function getTodayRecommendSongs(){
+export function getTodayRecommendSongs(cookie){
         return Axios({
             url:'/recommend/songs',
+            params:{
+                cookie
+            }
         })
 }
 

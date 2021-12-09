@@ -9,6 +9,7 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // import VueAwesomeSwiper from 'vue-awesome-swiper'
 // import 'swiper/dist/css/swiper.css'
+import './assets/icon/iconfont.js'
 
 
 // Vue.use(VueAwesomeSwiper, /* { default options with global component } */)

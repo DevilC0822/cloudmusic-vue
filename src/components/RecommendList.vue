@@ -95,7 +95,7 @@ export default {
       text-align: center;
       margin-top: 20px;
       box-sizing: border-box;
-      border: 1px solid #fff;
+      border: 1px solid transparent;
       border-radius: 16px;
       cursor: pointer;
 
@@ -109,6 +109,7 @@ export default {
       p {
         margin: 0;
         padding: 0 20%;
+        font-size: 12px;
       }
 
       &:hover {
@@ -128,9 +129,9 @@ export default {
     .list-container {
       .list-item {
         img {
-        margin-top: 12px;
-        width: 14.5vw;
-        min-width: 50px;
+          margin-top: 12px;
+          width: 14.5vw;
+          min-width: 50px;
         }
         p {
           font-size: 10px;

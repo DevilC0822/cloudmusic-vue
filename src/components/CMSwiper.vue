@@ -134,9 +134,9 @@ export default {
 }
 @media screen and (max-width: 750px) {
   #cmswiper {
-    margin-top: 12px;
+    margin-top: 0;
     .swiper-img {
-      width: 100%;
+      width: 95%;
     }
   }
 }

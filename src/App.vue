@@ -8,20 +8,46 @@
     <div :class="{'imitation-audio':true, 'is-bottom':isBottom}"> 
         <audio :src="playingUrl" ref="mainAudio" style="display:none;"></audio>
         <div class='song-info'>
-            <p>{{this.$store.state.playingSong.name}}</p>
+          <div v-if='this.$store.state.playingSong.name'>
+             <p>{{this.$store.state.playingSong.name}}</p>
             <span>{{this.$store.state.playingSong.songer[0].name}}</span>
             <span v-if='this.$store.state.playingSong.songer[1]'>{{this.$store.state.playingSong.songer[1].name}}</span>
+
+          </div>
+          <div v-else>
+              <span>当前无歌曲在播放</span>
+                    
+
+                    
+                   
+          </div>
+           
+        
+        
         </div>
 
         <div class='song-control'>
-              <i class="el-icon-back"></i>
-              <i v-if='!this.$store.state.isPlay' class="el-icon-video-play" @click='play'></i>
-              <i v-else class="el-icon-video-pause" @click='play'></i>
-              <i class="el-icon-right"></i>
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-shangyiqu"></use>
+                    </svg>
+
+                    <svg v-if='!this.$store.state.isPlay' class="icon" aria-hidden="true" @click='play'>
+                      <use xlink:href="#icon-bofangyinle"></use>
+                    </svg>
+
+                    <svg v-else class="icon" aria-hidden="true" @click='play'>
+                      <use xlink:href="#icon-a-zantingyinle"></use>
+                    </svg>
+
+                    <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-xiayiqu"></use>
+                    </svg>
         </div>
 
         <div class='songs-list'>
-              <i class='el-icon-s-unfold'></i>
+             <svg class="icon" aria-hidden="true">
+                      <use xlink:href="#icon-bofangliebiao"></use>
+                    </svg>
         </div>
     </div>
   </div>
@@ -54,6 +80,7 @@ export default {
     }
     //在页面刷新时将vuex里的信息保存到sessionStorage里
     window.addEventListener("beforeunload", () => {
+      this.$store.commit('setIsPlay',false)
       localStorage.setItem("store", JSON.stringify(this.$store.state));
     });
   },
@@ -74,15 +101,16 @@ export default {
 methods:{
   play(){
       let audio = this.$refs.mainAudio
-
-      if(audio.paused){
+      if(!audio.getAttribute('src') == ''){
+          if(audio.paused){
         audio.play()
         this.$store.commit('setIsPlay',true)
       }else{
         audio.pause()
         this.$store.commit('setIsPlay',false)
-
       }
+      }
+
   }
 
 },
@@ -142,6 +170,13 @@ a {
   text-decoration: none;
   color: #333;
 }
+/* 加入通用css代码（引入一次就行）阿里矢量图标库symbol引入 */
+ .icon {
+       width: 1em; height: 1em;
+       vertical-align: -0.15em;
+       fill: currentColor;
+       overflow: hidden;
+    }
 .pc-show {
   display: block;
 }
@@ -180,9 +215,9 @@ a {
       width: 100%;
       padding: 10px 0;
 
-      i{
+      svg{
         font-size: 24px;
-            cursor: pointer;
+        cursor: pointer;
 
       }
 
@@ -193,8 +228,8 @@ a {
       }
 
       .song-control{
-          i{
-            margin: 0 10px;
+          svg{
+            margin: 0 5px;
           }
       }
 
