@@ -48,7 +48,7 @@ export default {
 
   methods: {
     load(){
-        console.log('1111111222')
+        
     },
     goPlay(item) {
       console.log("item");

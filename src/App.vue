@@ -77,11 +77,17 @@ export default {
           JSON.parse(localStorage.getItem("store"))
         )
       );
+      if(localStorage.getItem('cookie')){
+        let cookie = localStorage.getItem('cookie')
+        this.$store.commit('setCookie',cookie)
+        this.$store.commit('setIsLogin',true)
+      }
     }
     //在页面刷新时将vuex里的信息保存到sessionStorage里
     window.addEventListener("beforeunload", () => {
       this.$store.commit('setIsPlay',false)
       localStorage.setItem("store", JSON.stringify(this.$store.state));
+      localStorage.setItem('cookie',this.$store.state.cookie)
     });
   },
   mounted(){
