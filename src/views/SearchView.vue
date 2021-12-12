@@ -52,15 +52,18 @@ export default {
     },
 
     lazy_load() {
-      let songsIdArr = this.$store.state.playingList;
+      let songsIdArr_lazy = [];
+      for (const iterator of this.$store.state.playingList) {
+        songsIdArr_lazy.push(iterator);
+      }
       const that = this;
 
       function getNextSongsInfo(n) {
-        let newAdd;
-        if (songsIdArr.length >= n) {
-          newAdd = songsIdArr.splice(0, n);
+        let newAdd = [];
+        if (songsIdArr_lazy.length >= n) {
+          newAdd = songsIdArr_lazy.splice(0, n);
         } else {
-          newAdd = songsIdArr.splice(0);
+          newAdd = songsIdArr_lazy.splice(0);
         }
         if (newAdd.length > 0) {
           getSongDetail(newAdd.toString())
@@ -72,13 +75,19 @@ export default {
             .catch((err) => {
               console.log(err);
             });
+          console.log("getNextSongsInfo");
+          console.log(newAdd);
         }
 
-        console.log("getNextSongsInfo");
-        console.log(newAdd);
+        if (newAdd.length == 0) {
+          that.$message({
+            message: "到底了",
+            type: "warning",
+          });
+        }
       }
 
-      getNextSongsInfo(15);
+      getNextSongsInfo(30);
 
       document.addEventListener("scroll", function () {
         if (getScrollTop() + getClientHeight() == getScrollHeight()) {
@@ -143,8 +152,8 @@ export default {
           for (const item of res.data.result.songs) {
             songsIdArr.push(item.id);
           }
-          // console.log(songsIdArr.toString());
           this.$store.commit("setPlayingList", songsIdArr);
+
           this.lazy_load();
         })
         .catch((err) => {
@@ -159,32 +168,13 @@ export default {
         .then((res) => {
           console.log(res.data.playlist);
           this.showPlayListName = res.data.playlist.name;
+
           let songsIdArr = [];
           for (const item of res.data.playlist.trackIds) {
-            // console.log(item)
-            // 每次单独通过id请求 歌曲详细信息
-            //   getSongDetail(item.id).then(res =>{
-            //     console.log('getSongDetail');
-            //     console.log(res)
-
-            //     }).catch(err =>{
-            //     console.log(err)
-            // })
             songsIdArr.push(item.id);
           }
-          // console.log(songsIdArr.toString());
           this.$store.commit("setPlayingList", songsIdArr);
 
-          // getSongDetail可以接收多个 id, 用 , 隔开 一次请求多首歌曲详细信息
-          // getSongDetail(songsIdArr.toString())
-          //   .then((res) => {
-          //     console.log("getSongDetail");
-          //     console.log(res);
-          //     this.songsInfo = res.data.songs;
-          //   })
-          //   .catch((err) => {
-          //     console.log(err);
-          //   });
           this.lazy_load();
         })
         .catch((err) => {
@@ -200,6 +190,7 @@ export default {
   padding: 20px 0;
   width: 80%;
   margin: auto;
+  padding-bottom: 50px;
 }
 .showSongsBox ul li {
   display: flex;
@@ -235,6 +226,7 @@ export default {
   .songs-container {
     padding: 12px 0;
     width: 99%;
+    padding-bottom: 70px;
   }
 }
 </style>

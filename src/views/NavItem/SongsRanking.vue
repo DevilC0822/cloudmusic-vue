@@ -57,6 +57,7 @@ export default {
 <style lang="less" scoped>
 #songsranking {
   min-height: 100vh;
+  padding-bottom: 30px;
 
   .showPlayList {
     width: 200px;
@@ -64,6 +65,12 @@ export default {
     img {
       width: 100%;
     }
+  }
+}
+@media screen and (max-width: 750px) {
+  #songsranking {
+    font-size: 12px;
+    padding-bottom: 50px;
   }
 }
 </style>

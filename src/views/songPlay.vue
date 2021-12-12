@@ -99,6 +99,10 @@ export default {
 </script>
 
 <style scoped>
+.songPlay{
+  padding-bottom: 70px;
+}
+
 .audio-wrapper {
   background-color: #fcfcfc;
   margin: 10px auto;
@@ -107,6 +111,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 30px;
 }
 .audio-wrapper audio {
   width: 100%;

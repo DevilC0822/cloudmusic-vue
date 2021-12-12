@@ -17,11 +17,12 @@ export default new Vuex.Store({
   mutations: {
     setToken(state,token){
       state.token = token
-      localStorage.token = token
+      
+      localStorage.setItem("cookie", token);
     },
     setCookie(state,cookie){
       state.cookie = cookie
-      localStorage.cookie = cookie
+      localStorage.setItem("cookie", cookie);
     },
     setIsLogin(state,loginInfo){
       state.isLogin = loginInfo
@@ -42,32 +43,32 @@ export default new Vuex.Store({
       state.playingList = playingList
     },
   },
-  getters: {
-    getToken(state){
-      if(!state.token){
-        state.token = localStorage.getItem('token')
-      }
-      return state.token
-    },
-    getCookie(state){
-      if(!state.cookie){
-        state.cookie = localStorage.getItem('cookie')
-      }
-      return state.token
-    },
-    getIsLogin(){
-      return state.isLogin
-    },
-    getIsPlay(){
-      return state.isPlay
-    },
-    getPlayingSong(){
-      return state.playingSong
-    },
-    getPlayingList(){
-      return state.playingList
-    }
-  },
+  // getters: {
+  //   getToken(state){
+  //     if(!state.token){
+  //       state.token = localStorage.getItem('token')
+  //     }
+  //     return state.token
+  //   },
+  //   getCookie(state){
+  //     if(!state.cookie){
+  //       state.cookie = localStorage.getItem('cookie')
+  //     }
+  //     return state.token
+  //   },
+  //   getIsLogin(){
+  //     return state.isLogin
+  //   },
+  //   getIsPlay(){
+  //     return state.isPlay
+  //   },
+  //   getPlayingSong(){
+  //     return state.playingSong
+  //   },
+  //   getPlayingList(){
+  //     return state.playingList
+  //   }
+  // },
   actions: {
   },
   modules: {

@@ -55,12 +55,8 @@
         <div class="container">
           <div class="left">
             <div class="login">登录</div>
-            <div class="eula">
-              输入网易云音乐官方账号密码即可登录
-            </div>
-            <div class='qr-login' @click="qrLogin">
-              扫码登录
-            </div>
+            <div class="eula">输入网易云音乐官方账号密码即可登录</div>
+            <div class="qr-login" @click="qrLogin">扫码登录</div>
           </div>
 
           <div class="right">
@@ -149,87 +145,98 @@
         </div>
       </div>
     </div> -->
-<div class="wrapper profileCard" v-show="refreshLogin">
-  <div class="profile-card js-profile-card">
-    <div class="profile-card__img">
-      <img :src='refreshProfileInfo.avatarUrl' alt="profile card">
-    </div>
+    <div class="wrapper profileCard" v-show="refreshLogin">
+      <div class="profile-card js-profile-card">
+        <div class="profile-card__img">
+          <img :src="refreshProfileInfo.avatarUrl" alt="profile card" />
+        </div>
 
-    <div class="profile-card__cnt js-profile-cnt">
-      <div class="profile-card__name">{{ refreshProfileInfo.nickname }}</div>
-      <div class="profile-card__txt">{{ refreshProfileInfo.signature }}</div>
-      <div class="profile-card-loc">
+        <div class="profile-card__cnt js-profile-cnt">
+          <div class="profile-card__name">
+            {{ refreshProfileInfo.nickname }}
+          </div>
+          <div class="profile-card__txt">
+            {{ refreshProfileInfo.signature }}
+          </div>
+          <!-- <div class="profile-card-loc">
         <span class="profile-card-loc__txt">
           Istanbul, Turkey
         </span>
-      </div>
+      </div> -->
 
-      <div class="profile-card-inf">
-        <div class="profile-card-inf__item">
-          <div class="profile-card-inf__title">{{ refreshProfileInfo.follows }}</div>
-          <div class="profile-card-inf__txt">关注</div>
-        </div>
+          <div class="profile-card-inf">
+            <div class="profile-card-inf__item">
+              <div class="profile-card-inf__title">
+                {{ refreshProfileInfo.follows }}
+              </div>
+              <div class="profile-card-inf__txt">关注</div>
+            </div>
 
-        <div class="profile-card-inf__item">
-          <div class="profile-card-inf__title">{{ refreshProfileInfo.followeds }}</div>
-          <div class="profile-card-inf__txt">粉丝</div>
-        </div>
+            <div class="profile-card-inf__item">
+              <div class="profile-card-inf__title">
+                {{ refreshProfileInfo.followeds }}
+              </div>
+              <div class="profile-card-inf__txt">粉丝</div>
+            </div>
 
-        <!-- <div class="profile-card-inf__item">
+            <!-- <div class="profile-card-inf__item">
           <div class="profile-card-inf__title">123</div>
           <div class="profile-card-inf__txt">歌单</div>
         </div> -->
 
-        <div class="profile-card-inf__item">
-          <div class="profile-card-inf__title">{{ refreshuserLevelInfo.level}}</div>
-          <div class="profile-card-inf__txt">等级</div>
+            <div class="profile-card-inf__item">
+              <div class="profile-card-inf__title">
+                {{ refreshuserLevelInfo.level }}
+              </div>
+              <div class="profile-card-inf__txt">等级</div>
+            </div>
+          </div>
+
+          <div class="profile-card-ctr">
+            <button class="profile-card__button button--blue js-message-btn">
+              查看详情
+            </button>
+            <button
+              class="profile-card__button button--orange"
+              @click="loginOut"
+            >
+              注销登录
+            </button>
+          </div>
         </div>
-      </div>
 
-    
+        <div class="profile-card-message js-message">
+          <form class="profile-card-form">
+            <div class="profile-card-form__container">
+              <textarea placeholder="Say something..."></textarea>
+            </div>
 
-      <div class="profile-card-ctr">
-        <button class="profile-card__button button--blue js-message-btn">查看详情</button>
-        <button class="profile-card__button button--orange" @click='loginOut'>注销登录</button>
+            <div class="profile-card-form__bottom">
+              <button
+                class="profile-card__button button--blue js-message-close"
+              >
+                Send
+              </button>
+
+              <button
+                class="profile-card__button button--gray js-message-close"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+
+          <div class="profile-card__overlay js-message-close"></div>
+        </div>
       </div>
     </div>
 
-    <div class="profile-card-message js-message">
-      <form class="profile-card-form">
-        <div class="profile-card-form__container">
-          <textarea placeholder="Say something..."></textarea>
-        </div>
-
-        <div class="profile-card-form__bottom">
-          <button class="profile-card__button button--blue js-message-close">
-            Send
-          </button>
-
-          <button class="profile-card__button button--gray js-message-close">
-            Cancel
-          </button>
-        </div>
-      </form>
-
-      <div class="profile-card__overlay js-message-close"></div>
-    </div>
-
-  </div>
-
-</div>
-
-<!-- 二维码弹框 -->
-<el-dialog
-  title="打开手机二维码,扫码登录"
-  :visible.sync="dialogVisible">
-  <div>
-    <img :src="qrImg" alt="">
-  </div>
-
-</el-dialog>
-
-
-
+    <!-- 二维码弹框 -->
+    <el-dialog title="打开手机二维码,扫码登录" :visible.sync="dialogVisible">
+      <div>
+        <img :src="qrImg" alt="" />
+      </div>
+    </el-dialog>
 
     <cmbottom />
   </div>
@@ -242,18 +249,15 @@ import cmbottom from "../components/CMBottom.vue";
 import anime from "animejs/lib/anime.es.js";
 import { login } from "@/api";
 import { loginStatus } from "@/api";
-import { loginRefresh } from '@/api'
-import { logout } from '@/api'
+import { loginRefresh } from "@/api";
+import { logout } from "@/api";
 import { userLevel } from "@/api";
 import { getUserMsg } from "@/api";
 import { getQRKey } from "@/api";
 import { QRCreate } from "@/api";
 import { QRCheck } from "@/api";
 
-import axios from 'axios'
-
-
-
+import axios from "axios";
 
 import qs from "qs";
 import { Dialog } from "vant";
@@ -264,14 +268,14 @@ export default {
     return {
       phone: "",
       password: "",
-      userId:null,
+      userId: null,
       fixedCount: 100,
       gradientColor: {
         "0%": "#3fecff",
         "100%": "#6149f6",
       },
-      dialogVisible:false,
-      qrImg:'',
+      dialogVisible: false,
+      qrImg: "",
       //登陆方式 默认为1账号密码登录  2为验证码登录
       loginType: 1,
     };
@@ -293,241 +297,216 @@ export default {
   },
   methods: {
     loginBtn() {
-
-      if(this.phone && this.password){
+      if (this.phone && this.password) {
         login(this.phone, this.password)
-        .then((res) => {
-          console.log("登陆成功");
-          console.log(res);
-          if(res.data.cookie){
-          this.afterLogin(res.data.cookie)
+          .then((res) => {
+            console.log("登陆成功");
+            console.log(res);
+            if (res.data.cookie) {
+              this.afterLogin(res.data.cookie);
+            }
+          })
+          .catch((err) => {
+            console.log("登陆失败");
+            console.log(err);
 
-          }
-
-        })
-        .catch((err) => {
-          console.log('登陆失败')
-          console.log(err);
-
+            const h = this.$createElement;
+            this.$notify({
+              title: "登录失败",
+              message: h("i", { style: "color: teal" }, "登录失败"),
+            });
+          });
+      } else {
         const h = this.$createElement;
         this.$notify({
-        title: '登录失败',
-          message: h('i', { style: 'color: teal'}, '登录失败')
-        });
-        });
-      }else{
-
-        const h = this.$createElement;
-        this.$notify({
-          title: '登录失败',
-          message: h('i', { style: 'color: teal'}, '账号或密码为空')
+          title: "登录失败",
+          message: h("i", { style: "color: teal" }, "账号或密码为空"),
         });
       }
- 
     },
     loginOut() {
-      let cookie = this.$store.state.cookie
-      logout(cookie).then(res => {
-        console.log('loginOut')
-        console.log(res)
+      let cookie = this.$store.state.cookie;
+      logout(cookie).then((res) => {
+        console.log("loginOut");
+        console.log(res);
 
-        loginRefresh(cookie).then(res => {
-        console.log('loginRefresh')
-        console.log(res)
-        // this.$store.commit("setIsLogin", false);
-        this.$store.commit("setCookie", '');
-        this.$store.commit("setToken", '');
-        this.$store.commit("setIsPlay", false);
-        this.$store.commit("setPlayingSong", {});
-
-})
-        
-      })
-      
-      
+        loginRefresh(cookie).then((res) => {
+          console.log("loginRefresh");
+          console.log(res);
+          // this.$store.commit("setIsLogin", false);
+          this.$store.commit("setCookie", "");
+          this.$store.commit("setToken", "");
+          this.$store.commit("setIsPlay", false);
+          this.$store.commit("setPlayingSong", {});
+        });
+      });
     },
-    async qrLogin1(){
-      this.dialogVisible = true
+    async qrLogin1() {
+      this.dialogVisible = true;
 
       ////二维码登录第一步
-      let timersTamp = Date.now()
-      let key
-      console.log(timersTamp)
-        getQRKey(timersTamp).then(res => {
-        console.log('qr/key 成功')
-        console.log(res)
-        key = res.data.data.unikey
-
-
-      }).catch(err => {
-        console.log('qr/key 获取失败')
-        console.log(err)
-      })
-
-        //二维码登录第二步
-        QRCreate(key,true,timersTamp).then(res => {
-          console.log('qrCreate 成功')
-          console.log(res)
-          this.qrImg = res.data.data.qrimg
-
-        }).catch(err => {
-          console.log('qrCreate 失败')
-          console.log(err)
+      let timersTamp = Date.now();
+      let key;
+      console.log(timersTamp);
+      getQRKey(timersTamp)
+        .then((res) => {
+          console.log("qr/key 成功");
+          console.log(res);
+          key = res.data.data.unikey;
         })
+        .catch((err) => {
+          console.log("qr/key 获取失败");
+          console.log(err);
+        });
 
-                //二维码登录第三步
-          let timer = setInterval(async () => {
-             QRCheck(key,timersTamp).then(res => {
-            console.log('QRCheck 成功')
-            console.log(res)
-            console.log('当前状态: ' + res.data.message)
-            if(res.data.code == 800){
-              alert('二维码已过期，请重新获取')
-              clearInterval(timer)
-              this.dialogVisible = false
-            }      
-            if(res.data.code == 803){
-              clearInterval(timer)
-              this.dialogVisible = false
+      //二维码登录第二步
+      QRCreate(key, true, timersTamp)
+        .then((res) => {
+          console.log("qrCreate 成功");
+          console.log(res);
+          this.qrImg = res.data.data.qrimg;
+        })
+        .catch((err) => {
+          console.log("qrCreate 失败");
+          console.log(err);
+        });
 
-          this.$store.commit("setProfileInfo", res.data.profile);
-          //    console.log(res.data.token)
-          this.$store.commit("setToken", JSON.stringify(res.data.token));
-          this.$store.commit("setCookie", res.data.cookie);
-         this.userId = res.data.profile.userId
-
-              loginStatus(this.$store.state.cookie).then(res => {
-                console.log('二维码扫码成功，获取登录状态')
-                console.log(res)
-              })
+      //二维码登录第三步
+      let timer = setInterval(async () => {
+        QRCheck(key, timersTamp)
+          .then((res) => {
+            console.log("QRCheck 成功");
+            console.log(res);
+            console.log("当前状态: " + res.data.message);
+            if (res.data.code == 800) {
+              alert("二维码已过期，请重新获取");
+              clearInterval(timer);
+              this.dialogVisible = false;
             }
+            if (res.data.code == 803) {
+              clearInterval(timer);
+              this.dialogVisible = false;
 
-          }).catch(err => {
-            console.log('QRCheck 失败')
-            console.log(err)
+              this.$store.commit("setProfileInfo", res.data.profile);
+              //    console.log(res.data.token)
+              this.$store.commit("setToken", JSON.stringify(res.data.token));
+              this.$store.commit("setCookie", res.data.cookie);
+              this.userId = res.data.profile.userId;
+
+              loginStatus(this.$store.state.cookie).then((res) => {
+                console.log("二维码扫码成功，获取登录状态");
+                console.log(res);
+              });
+            }
           })
-            
-          }, 3000);
-
-
-         
-
-    },
-
-
-    
-    async qrLogin2(){
-      let timer
-      let timestamp = Date.now()
-      const res = await getQRKey(timestamp)
-      const key = res.data.data.unikey
-      const res2 = await QRCreate(key,true,timestamp)
-      this.qrImg = res2.data.data.qrimg
-      this.dialogVisible = true
-
-      timer = setInterval(async () => {
-        const statusRes = await QRCheck(key,timestamp)
-        console.log(statusRes)
-        if (statusRes.code === 800) {
-            alert('二维码已过期,请重新获取')
-            clearInterval(timer)
-            this.dialogVisible = false
-          }
-          if (statusRes.code === 800) {
-            // alert('二维码已过期,请重新获取')
-            // clearInterval(timer)
-            this.dialogVisible = false
-          }
-          if (statusRes.code === 803) {
-            // 这一步会返回cookie
-            clearInterval(timer)
-            alert('授权登录成功')
-            this.dialogVisible = false
-            // await loginStatus()
-          }
+          .catch((err) => {
+            console.log("QRCheck 失败");
+            console.log(err);
+          });
       }, 3000);
     },
 
-    qrLogin(){
-      let that = this
-       async function checkStatus(key) {
+    async qrLogin2() {
+      let timer;
+      let timestamp = Date.now();
+      const res = await getQRKey(timestamp);
+      const key = res.data.data.unikey;
+      const res2 = await QRCreate(key, true, timestamp);
+      this.qrImg = res2.data.data.qrimg;
+      this.dialogVisible = true;
+
+      timer = setInterval(async () => {
+        const statusRes = await QRCheck(key, timestamp);
+        console.log(statusRes);
+        if (statusRes.code === 800) {
+          alert("二维码已过期,请重新获取");
+          clearInterval(timer);
+          this.dialogVisible = false;
+        }
+        if (statusRes.code === 800) {
+          // alert('二维码已过期,请重新获取')
+          // clearInterval(timer)
+          this.dialogVisible = false;
+        }
+        if (statusRes.code === 803) {
+          // 这一步会返回cookie
+          clearInterval(timer);
+          alert("授权登录成功");
+          this.dialogVisible = false;
+          // await loginStatus()
+        }
+      }, 3000);
+    },
+
+    qrLogin() {
+      let that = this;
+      async function checkStatus(key) {
         const res = await axios({
           url: `http://devilc.cn:3000/login/qr/check?key=${key}&timerstamp=${Date.now()}`,
           withCredentials: true, //关键
-        })
-        return res.data
+        });
+        return res.data;
       }
 
       async function login() {
-        let timer
-        let timestamp = Date.now()
+        let timer;
+        let timestamp = Date.now();
         // getLoginStatus()
         const res = await axios({
           url: `http://devilc.cn:3000/login/qr/key?timerstamp=${Date.now()}`,
           withCredentials: true, //关键
-        })
-        const key = res.data.data.unikey
+        });
+        const key = res.data.data.unikey;
         const res2 = await axios({
           url: `http://devilc.cn:3000/login/qr/create?key=${key}&qrimg=true&timerstamp=${Date.now()}`,
           withCredentials: true, //关键
-        })
-        that.qrImg = res2.data.data.qrimg
-        that.dialogVisible = true
+        });
+        that.qrImg = res2.data.data.qrimg;
+        that.dialogVisible = true;
 
         timer = setInterval(async () => {
-          const statusRes = await checkStatus(key)
-          console.log(statusRes)
+          const statusRes = await checkStatus(key);
+          console.log(statusRes);
           if (statusRes.code === 800) {
-            alert('二维码已过期,请重新获取')
-            that.dialogVisible = false
-            clearInterval(timer)
+            alert("二维码已过期,请重新获取");
+            that.dialogVisible = false;
+            clearInterval(timer);
           }
           if (statusRes.code === 803) {
             // 这一步会返回cookie
-            clearInterval(timer)
-            that.dialogVisible = false
-            that.afterLogin(statusRes.cookie)
-          
+            clearInterval(timer);
+            that.dialogVisible = false;
+            that.afterLogin(statusRes.cookie);
           }
-        }, 3000)
+        }, 3000);
       }
-      login()
-
+      login();
     },
 
-    afterLogin(cookie){
-      
+    afterLogin(cookie) {
       //在登录成功后调用这个方法，这个方法中同步一些不同的登录方式返回的不同的登录信息
-      // this.$store.commit("setIsLogin", true);
-      this.$store.commit('setCookie',cookie)
+      this.$store.commit("setCookie", cookie);
       //  刷新登录状态
-      loginStatus(cookie).then(res =>{
-              console.log('loginStatus 刷新登录信息')
-              console.log(res)
-              if(res.data.data.profile){
-                // this.$store.commit("setIsLogin", true);
-                
-                getUserMsg(res.data.data.profile.userId).then(res =>{
-                console.log('获取用户详情信息成功---')
-                console.log(res)
-                this.$store.commit("setProfileInfo", res.data.profile);
-                console.log(this.$store.state)
-              })
-                userLevel(cookie)
-                    .then((res) => {
-                      console.log('获取用户详细等级信息成功')
-                      console.log(res);
-                      this.$store.commit("setUserLevelInfo", res.data.data)
-                     
-                    })
-
-              }
-            })
-
-
+      loginStatus(cookie).then((res) => {
+        console.log("loginStatus 刷新登录信息");
+        console.log(res);
+        if (res.data.data.profile) {
+          getUserMsg(res.data.data.profile.userId).then((res) => {
+            console.log("获取用户详情信息成功---");
+            console.log(res);
+            this.$store.commit("setProfileInfo", res.data.profile);
+            console.log(this.$store.state);
+          });
+          userLevel(cookie).then((res) => {
+            console.log("获取用户详细等级信息成功");
+            console.log(res);
+            this.$store.commit("setUserLevelInfo", res.data.data);
+          });
+        }
+      });
     },
-    
-        // 控制登录页面下划线动画
+
+    // 控制登录页面下划线动画
     emailFous() {
       var current = null;
       if (current) current.pause();
@@ -546,7 +525,7 @@ export default {
       });
     },
     pswFous() {
-      console.log('111')
+      console.log("111");
       var current = null;
       if (current) current.pause();
       current = anime({
@@ -585,22 +564,22 @@ export default {
 </script>
 
 <style scoped lang='less'>
-
-
-
 //弹出框样式
-.el-dialog__wrapper ::v-deep .el-dialog{
+.el-dialog__wrapper ::v-deep .el-dialog {
   width: 30%;
   text-align: center;
 }
-::v-deep .el-dialog__headerbtn{
-    display: none;
- }
-
-@media screen and(max-width:750px){
-  .el-dialog__wrapper ::v-deep .el-dialog{
-  width: 80%;
+::v-deep .el-dialog__headerbtn {
+  display: none;
 }
+
+@media screen and(max-width:750px) {
+  .el-dialog__wrapper ::v-deep .el-dialog {
+    width: 80%;
+  }
+  #profiles {
+    padding-bottom: 100px;
+  }
 }
 //登陆样式
 @import url("https://rsms.me/inter/inter-ui.css");
@@ -715,13 +694,13 @@ input::-moz-focus-inner {
 #submit:active {
   color: #d0d0d2;
 }
-.qr-login{
+.qr-login {
   margin-left: 40px;
   cursor: pointer;
 }
 
 @media (max-width: 750px) {
-  .login{
+  .login {
     margin-top: 40px;
   }
 
@@ -731,25 +710,25 @@ input::-moz-focus-inner {
     padding-bottom: 20px;
   }
 
-.container {
+  .container {
     flex-direction: column;
     height: 630px;
     width: 320px;
   }
 
-.left {
+  .left {
     height: 100%;
     left: 20px;
     width: calc(100% - 40px);
     max-height: 270px;
   }
-.eula{
-  margin: 20px;
-}
-.qr-login{
-  font-size: 16px;
-  margin-left: 0;
-}
+  .eula {
+    margin: 20px;
+  }
+  .qr-login {
+    font-size: 16px;
+    margin-left: 0;
+  }
   .right {
     flex-shrink: 0;
     height: 100%;
@@ -758,14 +737,12 @@ input::-moz-focus-inner {
   }
 }
 
-
-
 // 个人信息展示样式
 // @import url('https://fonts.googleapis.com/css?family=Quicksand:400,500,700&subset=latin-ext');
 
 html {
   position: relative;
-  overflow-x: hidden!important;
+  overflow-x: hidden !important;
 }
 
 * {
@@ -773,11 +750,12 @@ html {
 }
 
 body {
-  font-family: 'Quicksand', sans-serif;
+  font-family: "Quicksand", sans-serif;
   color: #324e63;
 }
 
-a, a:hover {
+a,
+a:hover {
   text-decoration: none;
 }
 
@@ -808,14 +786,13 @@ a, a:hover {
     min-height: 100vh;
     padding-top: 100px;
   }
-
 }
 
 .profile-card {
   width: 100%;
   min-height: 460px;
   margin: auto;
-  box-shadow: 0px 8px 60px -10px rgba(13,28,39,0.6);
+  box-shadow: 0px 8px 60px -10px rgba(13, 28, 39, 0.6);
   background: #fff;
   border-radius: 12px;
   max-width: 700px;
@@ -830,12 +807,12 @@ a, a:hover {
     .profile-card__overlay {
       opacity: 1;
       pointer-events: auto;
-      transition-delay: .1s;
+      transition-delay: 0.1s;
     }
 
     .profile-card-form {
       transform: none;
-      transition-delay: .1s;
+      transition-delay: 0.1s;
     }
   }
 
@@ -849,7 +826,8 @@ a, a:hover {
     overflow: hidden;
     position: relative;
     z-index: 4;
-    box-shadow: 0px 5px 50px 0px rgb(108, 68, 252), 0px 0px 0px 7px rgba(107, 74, 255, 0.5);
+    box-shadow: 0px 5px 50px 0px rgb(108, 68, 252),
+      0px 0px 0px 7px rgba(107, 74, 255, 0.5);
 
     @media screen and (max-width: 576px) {
       width: 120px;
@@ -863,7 +841,6 @@ a, a:hover {
       object-fit: cover;
       border-radius: 50%;
     }
-
   }
 
   &__cnt {
@@ -871,7 +848,7 @@ a, a:hover {
     text-align: center;
     padding: 0 20px;
     padding-bottom: 40px;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 
   &__name {
@@ -891,7 +868,6 @@ a, a:hover {
       //color: #ff2846;
       font-weight: 700;
     }
-
   }
 
   &-loc {
@@ -906,7 +882,6 @@ a, a:hover {
       font-size: 27px;
       margin-right: 10px;
     }
-
   }
 
   &-inf {
@@ -922,9 +897,13 @@ a, a:hover {
 
       @media screen and (max-width: 768px) {
         padding: 10px 20px;
-        min-width: 120px;
+        min-width: 100px;
       }
 
+      @media screen and (max-width: 375px) {
+        padding: 10px 20px;
+        min-width: 85px;
+      }
     }
 
     &__title {
@@ -938,7 +917,6 @@ a, a:hover {
       font-weight: 500;
       margin-top: 7px;
     }
-
   }
 
   &-social {
@@ -958,11 +936,11 @@ a, a:hover {
       justify-content: center;
       color: #fff;
       background: #405de6;
-      box-shadow: 0px 7px 30px rgba(43,98,169,0.5);
+      box-shadow: 0px 7px 30px rgba(43, 98, 169, 0.5);
       position: relative;
       font-size: 21px;
       flex-shrink: 0;
-      transition: all .3s;
+      transition: all 0.3s;
 
       @media screen and (max-width: 768px) {
         width: 50px;
@@ -970,7 +948,7 @@ a, a:hover {
         margin: 10px;
       }
 
-      @media screen and (min-width: 768px){
+      @media screen and (min-width: 768px) {
         &:hover {
           transform: scale(1.2);
         }
@@ -982,12 +960,20 @@ a, a:hover {
       }
 
       &.twitter {
-        background: linear-gradient(45deg, #1da1f2,#0e71c8);
+        background: linear-gradient(45deg, #1da1f2, #0e71c8);
         box-shadow: 0px 4px 30px rgba(19, 127, 212, 0.7);
       }
 
       &.instagram {
-        background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        background: linear-gradient(
+          45deg,
+          #405de6,
+          #5851db,
+          #833ab4,
+          #c13584,
+          #e1306c,
+          #fd1d1d
+        );
         box-shadow: 0px 4px 30px rgba(120, 64, 190, 0.6);
       }
 
@@ -1010,13 +996,11 @@ a, a:hover {
         background: linear-gradient(45deg, #d5135a, #f05924);
         box-shadow: 0px 4px 30px rgba(223, 45, 70, 0.6);
       }
-
     }
 
     .icon-font {
       display: inline-flex;
     }
-
   }
 
   &-ctr {
@@ -1028,13 +1012,12 @@ a, a:hover {
     @media screen and (max-width: 576px) {
       flex-wrap: wrap;
     }
-
   }
 
   &__button {
     background: none;
     border: none;
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
     font-weight: 700;
     font-size: 19px;
     margin: 15px 35px;
@@ -1045,7 +1028,7 @@ a, a:hover {
     color: #fff;
     cursor: pointer;
     backface-visibility: hidden;
-    transition: all .3s;
+    transition: all 0.3s;
 
     @media screen and (max-width: 768px) {
       min-width: 170px;
@@ -1065,7 +1048,7 @@ a, a:hover {
     }
 
     &:focus {
-      outline: none!important;
+      outline: none !important;
     }
 
     @media screen and (min-width: 768px) {
@@ -1089,7 +1072,6 @@ a, a:hover {
       &:hover {
         box-shadow: 0px 7px 30px rgba(19, 127, 212, 0.75);
       }
-
     }
 
     &.button--orange {
@@ -1099,7 +1081,6 @@ a, a:hover {
       &:hover {
         box-shadow: 0px 7px 30px rgba(223, 45, 70, 0.75);
       }
-
     }
 
     &.button--gray {
@@ -1107,7 +1088,6 @@ a, a:hover {
       background: #dcdcdc;
       color: #142029;
     }
-
   }
 
   &-message {
@@ -1120,7 +1100,7 @@ a, a:hover {
     padding-bottom: 100px;
     opacity: 0;
     pointer-events: none;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 
   &-form {
@@ -1132,10 +1112,10 @@ a, a:hover {
     background: #fff;
     border-radius: 10px;
     padding: 35px;
-    transform: scale(.8);
+    transform: scale(0.8);
     position: relative;
     z-index: 3;
-    transition: all .3s;
+    transition: all 0.3s;
 
     @media screen and (max-width: 768px) {
       max-width: 90%;
@@ -1153,9 +1133,7 @@ a, a:hover {
       @media screen and (max-width: 576px) {
         flex-wrap: wrap;
       }
-
     }
-
   }
 
   textarea {
@@ -1168,15 +1146,14 @@ a, a:hover {
     padding: 15px 20px;
     color: #324e63;
     font-weight: 500;
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
     outline: none;
-    transition: all .3s;
+    transition: all 0.3s;
 
     &:focus {
       outline: none;
       border-color: #8a979e;
     }
-
   }
 
   &__overlay {
@@ -1189,25 +1166,8 @@ a, a:hover {
     opacity: 0;
     background: rgba(22, 33, 72, 0.35);
     border-radius: 12px;
-    transition: all .3s;
+    transition: all 0.3s;
   }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-</style>
-
-<style>
-.van-notify--success {
-  border-radius: 0 0 16px 16px !important;
 }
 </style>
+
