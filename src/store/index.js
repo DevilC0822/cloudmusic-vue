@@ -18,11 +18,11 @@ export default new Vuex.Store({
     setToken(state,token){
       state.token = token
       
-      localStorage.setItem("cookie", token);
+      // localStorage.setItem("token", token);
     },
     setCookie(state,cookie){
       state.cookie = cookie
-      localStorage.setItem("cookie", cookie);
+      // localStorage.setItem("cookie", cookie);
     },
     setIsLogin(state,loginInfo){
       state.isLogin = loginInfo

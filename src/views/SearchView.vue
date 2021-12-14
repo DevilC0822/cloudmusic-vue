@@ -79,7 +79,8 @@ export default {
           console.log(newAdd);
         }
 
-        if (newAdd.length == 0) {
+        if (newAdd.length == 0 && that.$route.name == 'SearchView') {
+          
           that.$message({
             message: "到底了",
             type: "warning",

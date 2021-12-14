@@ -442,7 +442,7 @@ export default {
       let that = this;
       async function checkStatus(key) {
         const res = await axios({
-          url: `http://devilc.cn:3000/login/qr/check?key=${key}&timerstamp=${Date.now()}`,
+          url: `http://175.24.198.84:3000/login/qr/check?key=${key}&timerstamp=${Date.now()}`,
           withCredentials: true, //关键
         });
         return res.data;
@@ -453,12 +453,12 @@ export default {
         let timestamp = Date.now();
         // getLoginStatus()
         const res = await axios({
-          url: `http://devilc.cn:3000/login/qr/key?timerstamp=${Date.now()}`,
+          url: `http://175.24.198.84:3000/login/qr/key?timerstamp=${Date.now()}`,
           withCredentials: true, //关键
         });
         const key = res.data.data.unikey;
         const res2 = await axios({
-          url: `http://devilc.cn:3000/login/qr/create?key=${key}&qrimg=true&timerstamp=${Date.now()}`,
+          url: `http://175.24.198.84:3000/login/qr/create?key=${key}&qrimg=true&timerstamp=${Date.now()}`,
           withCredentials: true, //关键
         });
         that.qrImg = res2.data.data.qrimg;

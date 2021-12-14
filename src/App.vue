@@ -99,12 +99,9 @@ export default {
           JSON.parse(localStorage.getItem("store"))
         )
       );
-      if (localStorage.getItem("cookie")) {
-        let cookie = localStorage.getItem("cookie");
-        let isLogin = this.$store.state.isLogin;
-        if (!isLogin) {
-          this.cookieIsOK(cookie);
-        }
+      if (this.$store.state.cookie && !this.$store.state.isLogin) {
+        let cookie = this.$store.state.cookie;
+        this.cookieIsOK(cookie);
       }
     }
     //在页面刷新时将vuex里的信息保存到sessionStorage里
