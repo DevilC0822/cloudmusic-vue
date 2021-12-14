@@ -99,9 +99,10 @@ export default {
           JSON.parse(localStorage.getItem("store"))
         )
       );
+      this.$store.commit('setIsLogin',false)
       if (this.$store.state.cookie && !this.$store.state.isLogin) {
         let cookie = this.$store.state.cookie;
-        this.cookieIsOK(cookie);
+        this.cookieIsOK(cookie)
       }
     }
     //在页面刷新时将vuex里的信息保存到sessionStorage里
@@ -179,7 +180,8 @@ export default {
         if (res.data.data.profile.userId) {
           this.$store.commit("setIsLogin", true);
           return true;
-        } else false;
+        } else 
+        return false;
       });
     },
   },
